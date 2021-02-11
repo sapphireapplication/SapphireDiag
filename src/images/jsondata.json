@@ -1,0 +1,12 @@
+0: {id: "LNKFLOC", value: "1", editable: "false", visible: "false"}
+1: {id: "LNKFLVL", value: "0", editable: "false", visible: "false"}
+2: {id: "LNKTLOC", value: "1", editable: "false", visible: "false"}
+3: {id: "LNKTLVL", value: "8", editable: "false", visible: "false"}
+4: {id: "LNKTYP", value: "1", editable: "false", visible: "false"}
+
+{LNKFLOC : 1,
+LNKFLVL:0,
+LNKTLOC:1,
+LNKTLVL:8,
+LNKTYP:1 
+}

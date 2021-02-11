@@ -1,0 +1,2 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[20],{251:function(e){e.exports=JSON.parse('{"name":"RC0031","navigation":"Source Browser ","caption":"Source Browser","frame":[{"id":"0002","type":"source-browser"}],"contextmenu":false,"keyfield":["PGMID"],"keytext":["PGMTX"]}')}}]);
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiIyMC5idW5kbGUuanMiLCJzb3VyY2VSb290IjoiIn0=

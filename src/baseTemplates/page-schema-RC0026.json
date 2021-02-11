@@ -1,0 +1,11 @@
+{
+  "name": "RC0026",
+  "navigation": "Data Usage Diagram",
+  "caption": "Data Usage Diagram",
+  "frame": [
+    {
+      "id": "0002",
+      "type": "DUD-type1"
+    }
+  ]
+}

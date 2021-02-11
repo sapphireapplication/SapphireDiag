@@ -1,0 +1,11 @@
+{
+    "name": "RC0015",
+    "navigation": "Data Model Diagram",
+    "caption": "Data Model Diagram",
+    "frame": [
+      {
+        "id": "0002",
+        "type": "DMD Chart"
+      }
+    ]
+  }

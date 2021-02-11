@@ -1,0 +1,43 @@
+{
+  "name": "RC0011",
+  "navigation": "Program Details of ",
+  "caption": "Program Details ",
+  "frame": [
+    {
+      "id": "0002",
+      "type": "entprogram-detail"
+    }
+  ],
+
+  "contextmenu": true,
+  "contextmenucontent": [
+    {
+      "button": "but111",
+      "label": "Schema"
+    }
+  ],
+  "keyfield": ["ENTID", "PGMID"],
+  "keytext": ["ENTTX", "PGMTX"],
+  "columns": [
+    { "id": "PGMID", "label": "Program ID", "minWidth": 100 },
+    { "id": "PGMTX", "label": "Text", "minWidth": 150 },
+    { "id": "VIEWID", "label": "View Id", "minWidth": 100 },
+    {
+      "id": "WHRFSN",
+      "label": "Whrfsn",
+      "minWidth": 50
+    },
+    {
+      "id": "INTFID",
+      "label": "Intfid",
+      "minWidth": 50,
+      "align": "left"
+    },
+    {
+      "id": "OBJTYP",
+      "label": "Object Type",
+      "minWidth": 20,
+      "align": "left"
+    }
+  ]
+}

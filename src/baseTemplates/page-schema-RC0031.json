@@ -1,0 +1,16 @@
+{
+  "name": "RC0031",
+  "navigation": "Source Browser ",
+  "caption": "Source Browser",
+  "frame": [
+    {
+      "id": "0002",
+      "type": "source-browser"
+    }
+  ],
+  "contextmenu": false,
+  
+  "keyfield": ["PGMID"],
+  "keytext": ["PGMTX"]
+  
+}

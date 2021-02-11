@@ -1,0 +1,306 @@
+/* Rashi Code Starts */
+
+.relative1Indv {
+    background-color: #262626;
+    padding: 5px;
+    display : none;
+    /* border-left: solid 3px #ccc; */
+    border-radius : 4px;
+    width : 50%; /*300px*/
+    height :100%;
+    top : 0 px;
+    right : 0px; 
+    z-index : 1000;
+    overflow: auto;
+}
+
+.vertical_line{
+    height:50px; 
+    margin-left: 50%; 
+    width:2px; 
+    background:#000; 
+    border: #000
+}
+
+.ceDiv {
+    background-color: #262626;
+    padding: 5px;
+    display : none;
+    border-left: solid 3px #262626;
+    border-radius : 4px;
+    /* width : 46%; /*1000px; 300px*/
+   /* height :100%;
+    top : 0px;
+    left : 8%; */
+    z-index : 1000;
+    /* resize: both; */
+    /* overflow: auto; */
+}
+
+.ceDivIndv {
+    background-color: #262626;
+    padding: 5px;
+    display : none;
+    border-left: solid 3px #ccc;
+    border-radius : 4px;
+    width : 50%;
+    height : 100%;
+    top : 0px;
+    /* left : 200px; */
+    z-index : 1000;
+    overflow: auto;
+}
+
+.ceDivBlankHead{
+    font-family: "Open Sans", Helvetica, Arial, sans-serif;
+    font-size: 12px;
+    background-color: #262626;
+    /* background-color: #264d7e; */
+    font-weight: bold;
+    width: 100%;
+    table-layout: fixed;
+    border: none;
+}
+
+.ceDivHeadCapMain{
+    font-family: "Open Sans", Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    /* width: 100%; */
+    background-color:lightgrey;
+    table-layout: fixed;
+    border: none;
+    text-align: left;
+    padding: 5px;
+}
+
+
+.ceDivHeadCap{
+    font-family: "Open Sans", Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    width: 100%;
+    background-color: darkgray;
+    /* background-color: lightgrey; */
+    table-layout: fixed;
+    border: none;
+    text-align: center;
+    padding: 5px;
+}
+
+.ceApiDivHeadMainCap{
+    font-family: "Open Sans", Helvetica, Arial, sans-serif;
+    font-size: 12px;
+    /* font-weight: bold; */
+    width: 100%;
+    background-color:#264d7e;
+    color: white;
+    table-layout: fixed;
+    border: none;
+    text-align: center;
+    padding: 5px;
+}
+
+.ceApiDivHeadCap{
+    font-family: "Open Sans", Helvetica, Arial, sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    width: 100%;
+    background-color: white;
+    /* color: white; */
+    table-layout: fixed;
+    border: none;
+    /* border: 1px solid #bec0b8; */
+    text-align: left;
+    padding: 5px;
+}
+
+.ceApiDivHeadCol{
+    font-family: "Open Sans", Helvetica, Arial, sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    width: 100%;
+    /* margin-left: 10%; */
+    /* background-color: white; */
+    background-color: #dbd9da;
+    /* color: white; */
+    table-layout: fixed;
+    border: none;
+    text-align: left;
+    padding: 5px;
+}
+
+.ceApiDivCol{
+    font-family: "Open Sans", Helvetica, Arial, sans-serif;
+    font-size: 11px;
+    /* font-weight: bold; */
+    width: 100%;
+    /* margin-left: 20%; */
+    /* background-color: white; */
+    background-color: #dbd9da;
+    /* color: white; */
+    table-layout: fixed;
+    border: none;
+    text-align: left;
+    /* padding: 5px; */
+}
+
+.ceDivHeadCol{
+    font-family: "Open Sans", Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    font-weight: bold;
+    width: 100%;
+    background-color: lightgrey;
+    table-layout: fixed;
+    border: none;
+    padding: 5px;
+    margin: 0px;
+
+    /* text-align: center; */
+}
+
+.ceDivBody {
+    font-family: "Open Sans", Helvetica, Arial, sans-serif;
+    font-size: 11px;
+    font-weight: bold;
+    width: 100%;
+    table-layout: fixed;
+    border: none;
+    padding: 5px;
+    margin: 0px;
+}
+
+/* .apiTextArea {
+    display: inline;
+    font-size: 11px;
+    border: none;
+    background-color: lightgrey;
+    padding: 0em;
+    border-radius: 0em;
+} */
+
+.preHead {
+    display: inline;
+    border: none;
+    /* font-weight: bold; */
+    background-color: #C9C5EC;
+    padding: 0em;
+    /* margin: 0em; */
+    /* line-height: 1em; */
+}
+
+.preBody {
+    display: inline;
+    font-size: 11px;
+    border: none;
+    /* font-weight: bold; */
+    background-color: #262626; 
+    /* color: lightgrey; */
+    /* background-color: whitesmoke; */
+    color: lightgrey;
+    padding: 0em;
+    border-radius: 0em;
+    /* margin: 0em; */
+    /* line-height: 1em; */
+}
+
+.preBodySRE {
+    display: inline;
+    font-size: 11px;
+    border: none;
+    /* font-weight: bold; */
+    background-color: #262626;
+    /* background-color:whitesmoke; */
+    /* width: 100%; */
+    color: lightgrey;
+    /* color: darkgrey; */
+    padding: 0em;
+    border-radius: 0em;
+    /* margin: 0em; */
+    /* line-height: 1em; */
+}
+
+.preBodyWU {
+    display: inline;
+    font-size: 11px;
+    border: none;
+    /* font-weight: bold; */
+    background-color: #262626;
+    color: lightgrey;
+    /* background-color:whitesmoke;
+    color: darkgrey; */
+    padding: 0em;
+    border-radius: 0em;
+    /* margin: 0em; */
+    /* line-height: 1em; */
+}
+
+.preLink {
+    /* font-family: "Open Sans", Helvetica, Arial, sans-serif; */
+    font-size: 11px;
+    display: inline;
+    border: none;
+    /* font-weight: bold; */
+    color: lightgrey;
+    background-color: #262626;
+    /* color: gray;
+    background-color: whitesmoke; */
+    padding: 0em;
+    /* margin: 0em; */
+    /* line-height: 1em; */
+}
+
+.preLink:hover {
+    color: cyan;
+    cursor: pointer;
+    /* display: inline; */
+    /* border: none; */
+    font-weight: bold;
+    /* background-color: #ffffff; */
+    /* padding: 0em; */
+    /* margin: 0em; */
+    /* line-height: 1em; */
+}
+
+.ceClose {
+    background-color: lightgrey;
+    float: right;
+    cursor: pointer;
+    padding: 5px;
+    z-index: 20000000;
+    right:0px;
+    font-size: 10px !important;
+}
+
+.ceLvlSel {
+    width: 80px;
+    height: 20px;
+    background-color: lightgrey;
+    border: #000;
+    margin: 5px;
+    font-weight: bold;
+    font-size: 10px !important;
+    display:none;
+}
+
+.ceReEnggSel {
+    width: 80px;
+    height: 20px;
+    background-color: lightgrey;
+    border: #000;
+    margin: 5px;
+    font-weight: bold;
+    font-size: 10px !important;
+}
+
+.srExplosionBtn {
+    width: 100px;
+    height: 30px;
+    background-color: lightgrey;
+    border: #000;
+    border-radius: 4px;
+    margin: 5px;
+    font-weight: bold; 
+    font-size: 10px !important;
+}
+/* Rashi Code Ends */

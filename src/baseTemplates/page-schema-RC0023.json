@@ -1,0 +1,36 @@
+{
+  "name": "RC0023",
+  "navigation": "Programs Called By ",
+  "caption": "Programs Called",
+
+  "frame": [
+    {
+      "id": "0002",
+      "type": "pgmcalled-detail"
+    }
+  ],
+  "contextmenu": false,
+
+  "columns": [
+    {
+      "id": "CALLSEQ",
+      "label": "Sequence",
+      "minWidth": 30,
+      "align": "left"
+    },
+    { "id": "CLDPGM", "label": "Called Program", "minWidth": 100 },
+    { "id": "PGMTX", "label": "Text", "minWidth": 100 },
+    {
+      "id": "CALLID",
+      "label": "Call Id",
+      "minWidth": 100,
+      "align": "right"
+    },
+    {
+      "id": "CALLCLS",
+      "label": "Call Cls",
+      "minWidth": 100,
+      "align": "right"
+    }
+  ]
+}

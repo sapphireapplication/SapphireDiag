@@ -1,0 +1,43 @@
+{
+  "name": "RC0022",
+  "navigation": "Schema Details of ",
+  "caption": "Schema Details",
+  "frame": [
+    {
+      "id": "0002",
+      "type": "pgmschema-detail"
+    }
+  ],
+  "contextmenu": true,
+  "contextmenucontent": [
+    {
+      "button": "but221",
+      "label": "Code"
+    }
+  ],
+  "keyfield": ["PGMID", "ENTID", "SHORTNM"],
+  "keytext": ["PGMTX", "ENTTX", "FTXT"],
+  "columns": [
+    {
+      "id": "FSEQ",
+      "label": "Sequence",
+      "minWidth": 10,
+      "align": "left"
+    },
+
+    { "id": "SHORTNM", "label": "Short/Field Name", "minWidth": 100 },
+    { "id": "FTXT", "label": "Field Text", "minWidth": 100 },
+    {
+      "id": "LEN",
+      "label": "Length",
+      "minWidth": 10,
+      "align": "right"
+    },
+    {
+      "id": "DTATYP",
+      "label": "Data Type",
+      "minWidth": 10,
+      "align": "right"
+    }
+  ]
+}

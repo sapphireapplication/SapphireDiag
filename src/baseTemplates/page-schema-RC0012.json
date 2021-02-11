@@ -1,0 +1,34 @@
+{
+  "name": "RC0012",
+  "navigation": "Schema Details of ",
+  "caption": "Schema Details",
+  "contextmenu": false,
+  "frame": [
+    {
+      "id": "0002",
+      "type": "entschema-detail"
+    }
+  ],
+  "columns": [
+    {
+      "id": "FSEQ",
+      "label": "Sequence",
+      "minWidth": 30,
+      "align": "left"
+    },
+    { "id": "SHORTNM", "label": "Short/Field Name", "minWidth": 100 },
+    { "id": "FTXT", "label": "Field Text", "minWidth": 100 },
+    {
+      "id": "LEN",
+      "label": "Length",
+      "minWidth": 100,
+      "align": "right"
+    },
+    {
+      "id": "DTATYP",
+      "label": "Data Type",
+      "minWidth": 100,
+      "align": "right"
+    }
+  ]
+}

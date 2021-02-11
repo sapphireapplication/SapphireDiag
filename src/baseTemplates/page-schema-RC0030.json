@@ -1,0 +1,16 @@
+{
+    "name": "RC0030",
+    "navigation": "Source Code ",
+    "caption": "Source Code ",
+    "frame": [
+      {
+        "id": "0002",
+        "type": "Source-Code"
+      }
+    ],
+    "contextmenu": false,
+    
+    "keyfield": ["PGMID"],
+    "keytext": ["PGMTX"]
+    
+  }

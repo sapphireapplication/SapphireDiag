@@ -1,0 +1,40 @@
+{
+  "name": "RC0010",
+
+  "caption": "Entities Details ",
+  "navigation": "Entities Details ",
+
+  "frame": [
+    {
+      "id": "0002",
+      "type": "entities-detail"
+    }
+  ],
+  "contextmenu": true,
+  "contextmenucontent": [
+    { "button": "but15", "label": "DataModelDiag" },
+    { "button": "but11", "label": "Programs" },
+    { "button": "but12", "label": "Schema" },
+    { "button": "but13", "label": "Views" },
+    { "button": "but14", "label": "Relations" }
+  ],
+
+  "keyfield": ["ENTID"],
+  "keytext": ["ENTTX"],
+
+  "columns": [
+    { "id": "ENTID", "label": "Entity Id", "minWidth": 100 },
+    {
+      "id": "ENTTX",
+      "label": "Entity Text",
+      "minWidth": 170,
+      "align": "right"
+    },
+    {
+      "id": "CRTDAT",
+      "label": "Date of Creation",
+      "minWidth": 170,
+      "align": "right"
+    }
+  ]
+}

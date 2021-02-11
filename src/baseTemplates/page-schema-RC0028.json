@@ -1,0 +1,11 @@
+{
+  "name": "RC0028",
+  "navigation": "Program Structure Chart",
+  "caption": "Program Structure Chart",
+  "frame": [
+    {
+      "id": "0002",
+      "type": "Struc Chart"
+    }
+  ]
+}

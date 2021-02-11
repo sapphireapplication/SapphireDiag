@@ -1,0 +1,21 @@
+{
+  "name": "RC00241",
+  "navigation": "Parameters of  ",
+  "caption": "Parameters",
+  "contextmenu": false,
+  "frame": [
+    {
+      "id": "0002",
+      "type": "pgmcallingparam-detail"
+    }
+  ],
+  "columns": [
+    {
+      "id": "PGMFLD",
+      "label": "Program Field",
+      "minWidth": 250,
+      "align": "left"
+    },
+    { "id": "DBFLD", "label": "DataBase Field", "minWidth": 250 }
+  ]
+}

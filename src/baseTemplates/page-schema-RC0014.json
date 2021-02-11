@@ -1,0 +1,41 @@
+{
+  "name": "RC0014",
+  "navigation": "Entity Relation Details of ",
+  "caption": "Entity Relation Details",
+  "frame": [
+    {
+      "id": "0002",
+      "type": "entrelation-detail"
+    }
+  ],
+  "contextmenu": false,
+  "columns": [
+    {
+      "id": "RLNID",
+      "label": "Id",
+      "minWidth": 30,
+      "align": "right"
+    },
+    { "id": "RLNTP", "label": "Type", "minWidth": 30, "align": "right" },
+    { "id": "RTXT", "label": "Text", "minWidth": 100, "align": "right" },
+    {
+      "id": "PAR",
+      "label": "Parent",
+      "minWidth": 100,
+      "align": "right"
+    },
+    {
+      "id": "PARTX",
+      "label": "Parent Text",
+      "minWidth": 100,
+      "align": "right"
+    },
+    {
+      "id": "CHLD",
+      "label": "Child",
+      "minWidth": 100,
+      "align": "right"
+    },
+    { "id": "CHLDTX", "label": "Child Text", "minWidth": 100, "align": "right" }
+  ]
+}

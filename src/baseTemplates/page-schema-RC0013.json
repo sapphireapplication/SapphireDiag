@@ -1,0 +1,36 @@
+{
+  "name": "RC0013",
+  "navigation": "Entity View Details of ",
+  "caption": "Entity View Details ",
+
+  "frame": [
+    {
+      "id": "0002",
+      "type": "entview-detail"
+    }
+  ],
+  "contextmenu": false,
+  "columns": [
+    {
+      "id": "VIEWID",
+      "label": "View Id",
+      "minWidth": 30,
+      "align": "left"
+    },
+    { "id": "VIEWDIR", "label": "View Dir", "minWidth": 100 },
+    { "id": "TOTKEY", "label": "Total Key", "minWidth": 100 },
+    {
+      "id": "CRTDAT",
+      "label": "Date of Creation",
+      "minWidth": 100,
+      "align": "right"
+    },
+    {
+      "id": "TOTDOM",
+      "label": "Totdom",
+      "minWidth": 100,
+      "align": "right"
+    },
+    { "id": "UPDDAT", "label": "UPDDAT", "minWidth": 100, "align": "right" }
+  ]
+}

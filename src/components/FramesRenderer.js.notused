@@ -1,0 +1,96 @@
+import React, { useEffect, useState } from "react";
+import { connect } from "react-redux";
+import { Grid, Card, CardContent, CardActions } from "@material-ui/core";
+
+import TableRenderer from "./TableRenderer";
+import DFDRenderer from "./DFDRenderer";
+// import DataUsageDiagram from "./DataUsageDiagram/DataUsageDiagram";
+// import DataFlowDiagram from "./DataUsageDiagram/DataFlowDiagram";
+
+function FramesRenderer(props) {
+  console.log("inside frame ===", props);
+
+  // function choosescreen() {
+  //   switch (props.screenId) {
+  //     case "EntList":
+  //       //return { data: props.entityList };
+  //       return {};
+
+  //     case "PgmList":
+  //       //return { data: props.programList };
+  //       return {};
+
+  //     case "but11":
+  //       //return { data: props.programList, ForItem: props.ForEntity };
+  //       return { data: props.pgmPgmFileDetail, ForItem: props.ForEntity };
+  //     case "but111":
+  //       return { data: props.pgmSchemaDetail, ForItem: props.ForEntity };
+
+  //     case "but12":
+  //       return { data: props.schemaDetail, ForItem: props.ForEntity };
+
+  //     case "but13":
+  //       return { data: props.entviewDetail, ForItem: props.ForEntity };
+  //     case "but14":
+  //       return { data: props.entrelDetail, ForItem: props.ForEntity };
+  //     case "but21":
+  //       return { data: props.entPgmFileDetail, ForItem: props.ForProgram };
+  //     case "but22":
+  //       return { data: props.pgmSchemaDetail, ForItem: props.ForProgram };
+
+  //     case "but23":
+  //       return { data: props.pgmCalledDetail, ForItem: props.ForProgram };
+  //     case "but241":
+  //       return {
+  //         data: props.pgmCallingParamDetail,
+  //         ForItem: props.ForProgram,
+  //       };
+  //     case "but24":
+  //       return { data: props.pgmCallingDetail, ForItem: props.ForProgram };
+  //     case "but25":
+  //       console.log("inside but25");
+  //       return { data: props.pgmParamDetail, ForItem: props.ForProgram };
+
+  //     case "but211":
+  //       return { data: props.pgmSchemaDetail, ForItem: props.ForProgram };
+  //     case "but221":
+  //       return { data: props.pgmCodeDetail, ForItem: props.ForProgram };
+
+  //     default:
+  //       return null;
+  //   }
+  // }
+
+  return (
+    <Grid item xs={12} lg={12}>
+      <Card>
+        <CardContent>
+          
+            <DFDRenderer {...props} />
+        
+         
+        </CardContent>
+        <CardActions>{/* Render actions if any */}</CardActions>
+      </Card>
+    </Grid>
+    
+  );
+}
+
+export default connect(null, null)(FramesRenderer);
+{/* <Grid item xs={12} lg={12}>
+      <Card>
+        <CardContent>
+          {props.screenDetail.length ===
+          0 ? null : !props.screenDetail.hasOwnProperty("columns") ? (
+            <DFDRenderer {...props} />
+          ) : //<DataUsageDiagram {...props} />
+          //<DataFlowDiagram {...props} />
+          props.screenId === "PgmList" ||
+            props.screenId === "EntList" ? null : (
+            <TableRenderer dataToBeRendered={choosescreen()} {...props} />
+          )}
+        </CardContent>
+        <CardActions></CardActions>
+      </Card>
+    </Grid> */}

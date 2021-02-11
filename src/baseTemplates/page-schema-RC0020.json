@@ -1,0 +1,78 @@
+{
+  "name": "RC0020",
+  "navigation": "Program Details ",
+  "caption": "Program Details ",
+  "frame": [
+    {
+      "id": "0002",
+      "type": "Program-details"
+    }
+  ],
+  "contextmenu": true,
+  "contextmenucontent": [
+    {
+      "button": "but28",
+      "label": "Pgm Structure Chart"
+    },
+    {
+      "button": "but27",
+      "label": "Data Usage Diagram"
+    },
+    {
+      "button": "but22",
+      "label": "Schema"
+    },
+    {
+      "button": "but25",
+      "label": "Parameters"
+    },
+    {
+      "button": "but21",
+      "label": "Entities"
+    },
+    {
+      "button": "but23",
+      "label": "Called Programs"
+    },
+    {
+      "button": "but24",
+      "label": "Calling Programs"
+    }
+  ],
+  "keyfield": ["PGMID"],
+  "keytext": ["PGMTX"],
+  "columns": [
+    {
+      "id": "PGMID",
+      "label": "Program ID",
+      "minWidth": 50
+    },
+    {
+      "id": "PGMTX",
+      "label": "Text",
+      "minWidth": 100
+    },
+    {
+      "id": "VIEWID",
+      "label": "View Id",
+      "minWidth": 100
+    },
+    {
+      "id": "WHRFSN",
+      "label": "Whrfsn",
+      "minWidth": 100
+    },
+    {
+      "id": "INTFID",
+      "label": "Intfid",
+      "minWidth": 50,
+      "align": "left"
+    },
+    {
+      "id": "OBJTYP",
+      "label": "Object Type",
+      "minWidth": 20,
+      "align": "left"
+    }
+  ]
+}

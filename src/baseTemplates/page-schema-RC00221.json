@@ -1,0 +1,26 @@
+{
+  "name": "RC00221",
+  "navigation": "Code of  ",
+  "caption": "Code Details",
+  "contextmenu": false,
+  "frame": [
+    {
+      "id": "0002",
+      "type": "pgmcode-detail"
+    }
+  ],
+  "columns": [
+    {
+      "id": "LINENUM",
+      "label": "Line#",
+      "minWidth": 30,
+      "align": "left"
+    },
+    { "id": "STN", "label": "Statement", "minWidth": 150 },
+    { "id": "MVAR", "label": "Mvar", "minWidth": 50 },
+    { "id": "SVAR1", "label": "Svar1", "minWidth": 50 },
+    { "id": "SMVAR2", "label": "Svar2", "minWidth": 50 },
+    { "id": "SMVAR3", "label": "Svar3", "minWidth": 50 },
+    { "id": "SMVAR4", "label": "Svar4", "minWidth": 50 }
+  ]
+}

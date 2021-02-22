@@ -1,30 +1,31 @@
 import React, { useEffect, useState } from "react";
 import * as d3 from "d3";
-import CodeEditor from "./CodeEditor";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableContainer from "@material-ui/core/TableContainer";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import Paper from "@material-ui/core/Paper";
-import Button from "@material-ui/core/Button";
-import CloseIcon from '@material-ui/icons/Close';
-import IconButton from '@material-ui/core/IconButton';
+import $ from 'jquery';
+import CodeEditor from "./sourceBrowser";
+// import Table from "@material-ui/core/Table";
+// import TableBody from "@material-ui/core/TableBody";
+// import TableCell from "@material-ui/core/TableCell";
+// import TableContainer from "@material-ui/core/TableContainer";
+// import TableHead from "@material-ui/core/TableHead";
+// import TableRow from "@material-ui/core/TableRow";
+// import Paper from "@material-ui/core/Paper";
+// import Button from "@material-ui/core/Button";
+// import CloseIcon from '@material-ui/icons/Close';
+// import IconButton from '@material-ui/core/IconButton';
 
 export default function DataUsageDiagramFile(props) {
   console.log("props to dikha do==", props);
   const { classes } = props;
   //const [LoadCode, setLoadCode] = useState('0');
-  const [rBrowser, setrBrowser] = React.useState({slctd:0, rBrowserData:[]});
-  const [sourceBrowser, setsourceBrowser] = React.useState(0);
-  const [selectedDSE, setselDSE] = React.useState(0);
-  const [ExpData, setExpData] = React.useState({slctd:0, whereusedData:[]});
-  const [highlightIndex, setHighlightIndex] = React.useState(-1);
-  var DSEstyle = selectedDSE === 0 ? {display:"none"}: {display:"block"};
-  var Expstyle = ExpData.slctd===0 ? {display:"none"}: {display:"block"};
-  var rBrowserstyle = rBrowser.slctd===0 ? {display:"none"}: {display:"block"};
-  var sBrowserstyle = sourceBrowser===0 ? {display:"none"}: {display:"block"};
+  // const [rBrowser, setrBrowser] = React.useState({slctd:0, rBrowserData:[]});
+  // const [sourceBrowser, setsourceBrowser] = React.useState(0);
+  // const [selectedDSE, setselDSE] = React.useState(0);
+  // const [ExpData, setExpData] = React.useState({slctd:0, whereusedData:[]});
+  // const [highlightIndex, setHighlightIndex] = React.useState(-1);
+  // var DSEstyle = selectedDSE === 0 ? {display:"none"}: {display:"block"};
+  // var Expstyle = ExpData.slctd===0 ? {display:"none"}: {display:"block"};
+  // var rBrowserstyle = rBrowser.slctd===0 ? {display:"none"}: {display:"block"};
+  // var sBrowserstyle = sourceBrowser===0 ? {display:"none"}: {display:"block"};
 
   
   var SELENTITY = { codedata: [], entity: "" };
@@ -34,8 +35,9 @@ export default function DataUsageDiagramFile(props) {
   var pgmcodeentity=props.DUDFileData.pgmcodeentity;
   let k = 0;
     useEffect(() => {
+      if( props.DUDFileData.DUDFileData !=="")
         drawDFD();
-    },[props.DUDFileData.DUDFileData]);
+    },[props.DUDFileData.DUDFileData, props.mainWindowState]);
     function handlePgmStructureChart(){
       let progDetails = {
              field: "PGMID",
@@ -100,9 +102,9 @@ export default function DataUsageDiagramFile(props) {
     // appends a 'group' element to 'svg'
     // moves the 'group' element to the top left margin
 
-    if (d3.select("#svg1")["_groups"][0][0] !== null)
+    if (d3.select("#dudfilesvg")["_groups"][0][0] !== null)
       //removing the existing svg , if anys
-      d3.select("#svg1").remove();
+      d3.select("#dudfilesvg").remove();
     /*let svg = d3
       .select("#containerTree")
       .append("svg")
@@ -134,6 +136,7 @@ export default function DataUsageDiagramFile(props) {
     //shilpi
     var diff = 0;
     var sep;
+  var mainIndex = 0;
     var num = 0;
     //height = 550;
 //////// in case of Left list only (Default)
@@ -159,11 +162,59 @@ if(num ==6){
     }
   }
 var svgHeight = height+ num*500;
+var svg;
+console.log("window state==", props.mainWindowState, props.tgtgrpid)
+if (props.mainWindowState=="PGMSC_DU_FILE"){
+    var grptrans = d3.select(`#${props.tgtgrpid}`).attr('transform');
+    var tempCoords = grptrans.substring(10, grptrans.length - 1);
+      var x = parseFloat(tempCoords.split(',')[0])+ 610.00;
+      var y = parseFloat(tempCoords.split(',')[1]);
+  console.log("in if", d3.select("foreignObject[id^='rightSvg']"));
+  if (d3.select("foreignObject[id^='rightSvg']")["_groups"][0] !== null)
+  d3.select("foreignObject[id^='rightSvg']").remove();
+  else
+  console.log("not removed")
+   svg = d3
+  .select(`#grpmain`)
+  .append('foreignObject')
+  .attr('id', `rightSvg${props.tgtgrpid}`)
+  //.attr('height', svgHeight)
+  .attr('width', width )
+  .attr('x', x+100)
+  .attr('y', y)
+  .attr('style', 'background-color:white;border:1px black solid;overflow:auto;height:2000px')
+  .append('svg')
+  .attr('id','check')
+  .attr('width', width)
+  .attr('height', svgHeight)
+  .append("g")
+   .attr("id", "main1")
+ .attr("transform", " scale(4)");
+   let but = svg
     
-    let svg = d3
-      .select("#containerTree")
+   .append("rect")
+   .attr("x", 25)
+   .attr("y", 0)
+   .attr("width", 20)
+   .attr("height",20)
+   .attr("fill","white")
+   .attr("stroke-width", 1)
+   .attr("stroke", "black")
+var tex = svg.append("text")
+.attr("x", 30)
+.attr("y", 15)
+.style("font-size", "20px")
+.text(function(d){ return "x"})
+.on('click',function(d){
+   handleCloseClick();
+});
+}
+    else {
+      console.log("in else");
+     svg = d3
+      .select("#dudfilecontainerTree")
       .append("svg")
-      .attr("id", "svg1")
+      .attr("id", "dudfilesvg")
 
       // .attr("width", width + margin.right + margin.left)
       // .attr("height", height + margin.top + margin.bottom);
@@ -171,10 +222,11 @@ var svgHeight = height+ num*500;
       //.attr("height", 500)
       .attr("height",  svgHeight + margin.top + margin.bottom)
       //.attr("height",height)
-
+    }
+    let gp =svg
       .append("g")
-      .attr("id", "grpmain")
-      .attr("transform", "translate(190," + margin.top + ")");
+      .attr("id", "dudfilegrpmain")
+      //.attr("transform", "translate(190," + margin.top + ")");
       var treemap = d3.tree().size([height, width]);
 
     root.x0 = height / 2;
@@ -234,21 +286,32 @@ var svgHeight = height+ num*500;
       // Compute the new tree layout.
       var nodes = treeData.descendants(),
         links = treeData.descendants().slice(1);
-      //console.log("nodes====", nodes);
+      console.log("nodes====", nodes);
       //console.log("links====", links);
       var x3 = nodes[num].x;
 
       // Normalize for fixed-depth.
       nodes.forEach(function (d) {
         //console.log('shilpi_DU data', d)
-      if ((d.data.TEXT === d.data.ID) & (d.data.ID==='Entity')) {
-          d.y = d.depth * 50;
-        }
+      if ((d.data.TEXT === d.data.ID) & (d.data.ID==='Program')) {
+ //d.y = d.depth * 50; //hit and trial change
+        if (props.mainWindowState === "PGMSC_DU_FILE")  
+         d.y = d.depth * 50; //hit and trial change
+       else
+        d.y = d.depth * 250;
+          
+      }
       else if((d.data.TEXT === d.data.ID) & (d.data.ID==='Schema'))
             //d.y = d.depth * 300 +100;
-            d.y = d.depth *50 + 500
+            if (props.mainWindowState === "PGMSC_DU_FILE")  
+            d.y = d.depth *50 + 500 //hit and trial change
+            else
+            d.y = d.depth *250 + 500 //hit and trial change
       else if((d.data.TEXT === d.data.ID) & (d.data.ID==='CODE'))
-            d.y = d.depth * 50 + 750;
+         if (props.mainWindowState === "PGMSC_DU_FILE") 
+         d.y = d.depth * 50 + 750; //hit and trial change
+        else
+            d.y = d.depth * 250 + 750; //hit and trial change
       else
           d.y = d.depth * 75
         //d.y = d.depth*150;
@@ -269,25 +332,24 @@ var svgHeight = height+ num*500;
         .enter()
         .append("g")
         .attr("class", "node")
-        .attr("transform", function (d, x) {
-          if (d.data.TEXT === d.data.ID) {
+        // .attr("transform", function (d, x) {
+        //   if (d.data.TEXT === d.data.ID) {
             //console.log("transform===", source.y0 + 100, source.x0 - 50, x);
-            return (
+        //     return (
              // "translate(" + source.y0 + 100 + "," + (source.x0 - 50) + ")"
-             "translate(" + source.y0 + 100 + "," + (source.x0 ) + ")"
-            );
-          }
+        //      //"translate(" + source.y0  + "," + (source.x0 ) + ")"
+        //     null
+        //     );
 
-          return "translate(" + source.y0 + 100 + "," + source.x0+  ")";
-         // return "translate(" + (source.x0 - 150) + "," + (source.y0 - 300) + ")";
-        });
+          //return "translate(" + source.y0 + 100 + "," + source.x0+  ")";
+          // return "translate(" + (source.x0 - 150) + "," + (source.y0 - 300) + ")";})
+        
         /*.on("click", (d) => {
           if (d.data.ID !== d.data.TEXT) return click(d);
           else return null;
         })*/
-        let newList = processList(props.DUDFileData.DUDFileData.ID)
-        console.log("whats in newList==", newList)
-        function processList(entID){
+        //let newList = processList(props.DUDProgramData.DUDProgramData.ID)
+        function processList(pgmID){
         //console.log('shilpi pgmlist',props.programList)
         //let pgmList = [...props.DUDProgramData.LIST]
         let pgmList = [...props.dataUsageFileList]
@@ -326,7 +388,12 @@ var svgHeight = height+ num*500;
 
       var nodeFo = nodeEnter
         .append("foreignObject")
-        //.attr("class", "noder")
+        .attr("id", function(d,i){
+          if(d.data.TEXT !== d.data.ID)
+            return "f1";
+          else if(d.data.TEXT === d.data.ID && d.data.ID=='Program')
+             return  `nodex${i}`
+          })
         .attr("class",function(d,index){
           if(d.data.TEXT === d.data.ID)
             return "noder";
@@ -338,7 +405,13 @@ var svgHeight = height+ num*500;
             //SA_CHANGE
           else if(d.data.TEXT === d.data.ID && (d.data.ID=='Schema' || d.data.ID=='CODE'))
              return 250
-          else return 200;
+          else{
+            if(props.mainWindowState != 'PGMSC_DU_FILE')
+            return 200;
+            else
+             return 0;
+          
+          } 
           //return 150;
         })
         .attr("height", function (d, index) {
@@ -346,7 +419,12 @@ var svgHeight = height+ num*500;
           return chldHeight; //just half 150-->75
           else if(d.data.TEXT === d.data.ID && (d.data.ID=='Schema' || d.data.ID=='CODE'))
            return 150
-          else return 1100;
+          else {
+            if(props.mainWindowState != 'PGMSC_DU_FILE')
+            return svgHeight;
+            else
+              return 0;
+          } // hit and trial
           
         })
         .attr(
@@ -354,7 +432,7 @@ var svgHeight = height+ num*500;
           "background:whitesmoke;border: 1px solid ;font-size:12px;overflow-y:auto"
         )
         .style("border",function(d){
-          if(d.data.ID === 'Program' && d.data.WHFUSG > 4){
+          if(d.data.ID === 'Program' && d.data.WHFUSG >= 4){
             return '2px solid red'
           }
           else if(d.data.ID === 'Program' && d.data.WHFUSG < 4){
@@ -386,15 +464,17 @@ var svgHeight = height+ num*500;
               return 'table1'
             }
         });
-       var columns=["Files","Programs"]
+       //var columns=["Files","Programs"]
       //nodeFo
       svg.selectAll('#table2').selectAll('tr').remove();
       svg.selectAll('#table2')  
         .append("thead")
         .append("tr")
         .attr("style", "background:darkgrey;text: white;cursor:pointer; display:table-cell")
-        .style("background",function(d){
+        .style("background",function(d,idx){
           if(d.data.ID === 'Program' && d.data.HEADID == props.DUDFileData.DUDFileData.ID){
+            mainIndex = idx+1;
+            console.log('now check idx',mainIndex)
             return 'lightblue'
           }
           else{
@@ -404,7 +484,7 @@ var svgHeight = height+ num*500;
         ///adding context menu on head
         .on("contextmenu", function (d) {
           //console.log('shilpi table data',d)
-          const container = d3.select("#containerTree").node();
+          const container = d3.select("#dudfilecontainerTree").node();
           //console.log('shilpi container',container)
           d3.event.preventDefault();
           const position = d3.mouse(container);
@@ -426,7 +506,7 @@ var svgHeight = height+ num*500;
               };
             })
             d3.selectAll('body').on("click", function (d) {
-              const container = d3.select("#containerTree").node();
+              const container = d3.select("#dudfilecontainerTree").node();
               d3.event.preventDefault();
               const position = d3.mouse(container);
               d3.select("#d3contextMenu2")
@@ -454,7 +534,8 @@ var svgHeight = height+ num*500;
         }); /////ends making making heading
        
         svg.selectAll('#table1').selectAll('tr').remove();
-        svg.selectAll('#table1')
+        
+        /*svg.selectAll('#table1')
         .append("thead")
         .append("tr")
         .attr("style", "background:darkgrey;text: white")
@@ -488,7 +569,7 @@ var svgHeight = height+ num*500;
           if(d == 'Programs' && props.diagramType == 'DATA_USAGE_FILE')
              handleClick(d)
              
-        });
+        });*/
     
       //.attr("style", "border: 1px solid;font-size:12px;");
       //var nodeFo1 = nodeFo.append("tbody");
@@ -511,7 +592,7 @@ var svgHeight = height+ num*500;
         })
         .on("contextmenu", function (d) {
           //console.log('shilpi table data',d)
-          const container = d3.select("#containerTree").node();
+          const container = d3.select("#dudfilecontainerTree").node();
           //console.log('shilpi container',container)
           d3.event.preventDefault();
           const position = d3.mouse(container);
@@ -531,7 +612,7 @@ var svgHeight = height+ num*500;
               currentPgm = d
             })
             d3.selectAll('body').on("click", function (d) {
-              const container = d3.select("#containerTree").node();
+              const container = d3.select("#dudfilecontainerTree").node();
               d3.event.preventDefault();
               const position = d3.mouse(container);
               d3.select("#d3contextMenu2")
@@ -551,14 +632,17 @@ var svgHeight = height+ num*500;
         });
 
         // List Changes start
+        if (props.mainWindowState==="DATAUSAGEFILE") {
         var nodeFo2 = svg.selectAll('#table1').append("tbody");
       nodeFo2
         .selectAll("foreignObject.noder0")
-        .data(function (d) {
-          return newList;
+        .data(function (d, i) {
+          return props.dataUsageFileList;
+          //return newList;
         })
         .enter()
         .append("tr")
+        .attr("id", function (d,i){ return `tr${i}`} )
         .attr("class", classes.fotable)
         .on("click", function (d) {
           
@@ -568,15 +652,15 @@ var svgHeight = height+ num*500;
             text: d.ENTTX.trim(),
             value: d.ENTID.trim(), 
           }
-          props.setDataUsageFile(progDetails);
-          if (rBrowser.slctd===1)setrBrowser({slctd:0,rBrowserData:[]});
-          if (sourceBrowser===1) setsourceBrowser(0)
-          if(selectedDSE===1) setselDSE(0);
-          if(ExpData===1) setExpData({slctd:0, whereusedData:[]})
+          props.setDataUsageFile(progDetails,props);
+         // if (rBrowser.slctd===1)setrBrowser({slctd:0,rBrowserData:[]});
+         // if (sourceBrowser===1) setsourceBrowser(0)
+        //  if(selectedDSE===1) setselDSE(0);
+         // if(ExpData===1) setExpData({slctd:0, whereusedData:[]})
         })
         .on("contextmenu", function (d) {
           //console.log('shilpi table data',d)
-          const container = d3.select("#containerTree").node();
+          const container = d3.select("#dudfilecontainerTree").node();
           //console.log('shilpi container',container)
           d3.event.preventDefault();
           const position = d3.mouse(container);
@@ -597,7 +681,7 @@ var svgHeight = height+ num*500;
               //console.log('shilpi currentpgm',currentPgm)
             })
             d3.selectAll('body').on("click", function (d) {
-              const container = d3.select("#containerTree").node();
+              const container = d3.select("#dudfilecontainerTree").node();
               d3.event.preventDefault();
               const position = d3.mouse(container);
               d3.select("#d3contextMenu")
@@ -613,16 +697,61 @@ var svgHeight = height+ num*500;
         .append("td")
         .attr("colspan","2")
         .attr("class",classes.focell)
-        .style("background",function(d){
-          if(d.ENTID.trim() == props.DUDFileData.DUDFileData.ID){
+        .style("background",function(d, i){
+          
+          if(d.ENTID.trim()== props.DUDFileData.DUDFileData.ID){
+            var arrind = props.dataUsageFileList.findIndex(row=>
+            
+              row.ENTID.trim() === props.DUDFileData.DUDFileData.ID 
+            
+             )
+             console.log('check arrind   mainIndex', arrind, mainIndex)
+            var subRtFocus = document.getElementById(`tr`+arrind);
+           var tidx = mainIndex -1
+            var nodePos = document.getElementById(`nodex`+mainIndex).getBoundingClientRect()['top'];
+            var tr2Pos = document.getElementById(`tr`+tidx).getBoundingClientRect()['top'];
+            console.log('shilpi nodePos  tr2pos', nodePos, tr2Pos)
+            console.log('shilpi nodePos',  document.getElementById(`nodex`+mainIndex).getBoundingClientRect())
+            if(source!=root){
+              console.log('not come')
+              tr2Pos = document.getElementById(`tr`+arrind).getBoundingClientRect()['top']
+            }
+            //var x = parseFloat(tr2Pos)-parseFloat(nodePos);// the diff in 3rd pos of DUD / left table
+            //console.log('shilpi nodepos',nodePos, tr2Pos, x,document.getElementById('tr0').getBoundingClientRect()['top'],document.getElementById('nodex1').getBoundingClientRect()['top'])
+           // document.getElementById("f1").scrollBy(0,subRtFocus.getBoundingClientRect()['top']- nodePos-x);
+           //document.getElementById("f1").scrollBy(0,subRtFocus.getBoundingClientRect()['top']- tr2Pos);
+            console.log('calling scrollby')
             return "lightblue"
           }
         })
         .text(function (d) {
           return d.ENTID.trim() + ":" + d.ENTTX.trim() ;
         });
-       
+      }
+        //scroll table now start
+       /* var arrind = props.dataUsageFileList.findIndex(row=>
+            
+          row.ENTID.trim() === props.DUDFileData.DUDFileData.ID 
         
+         )
+         console.log('check arrind   mainIndex', arrind, mainIndex)
+        var subRtFocus = document.getElementById(`tr`+arrind);
+       var tidx = mainIndex -1
+        var nodePos = document.getElementById(`nodex`+mainIndex).getBoundingClientRect()['top'];
+        var tr2Pos = document.getElementById(`tr`+tidx).getBoundingClientRect()['top'];
+        console.log('shilpi nodePos  tr2pos', nodePos, tr2Pos)
+        console.log('shilpi nodePos',  document.getElementById(`nodex`+mainIndex).getBoundingClientRect())
+        if(source!=root){
+          console.log('not come')
+          tr2Pos = document.getElementById(`tr`+arrind).getBoundingClientRect()['top']
+        }
+        //var x = parseFloat(tr2Pos)-parseFloat(nodePos);// the diff in 3rd pos of DUD / left table
+        //console.log('shilpi nodepos',nodePos, tr2Pos, x,document.getElementById('tr0').getBoundingClientRect()['top'],document.getElementById('nodex1').getBoundingClientRect()['top'])
+       // document.getElementById("f1").scrollBy(0,subRtFocus.getBoundingClientRect()['top']- nodePos-x);
+       document.getElementById("f1").scrollBy(0,subRtFocus.getBoundingClientRect()['top']- tr2Pos);*/
+    //scroll table now ends
+       
+        //document.getElementById("f1").scrollBy(0,subRtFocus.getBoundingClientRect()['top']- 421);
 
       function foCodeClick(node) {
       var shortnm = node.MVARDB!== ""? node.MVARDB : (node.SVAR1!=="" ? node.SVAR1 : (node.SVAR2!=="" ? node.SVAR2 : (node.SVAR3!=="" ? node.SVAR3 : (node.SVAR4!=="" ? node.SVAR4: ""))) );
@@ -673,14 +802,15 @@ var svgHeight = height+ num*500;
 
       }
       function foClick1(node) {
-        console.log('clicked node seema',node)
-        if(rBrowser.slctd===1)
-        setrBrowser({slctd:0,rBrowserData:[]});
+        console.log('clicked node seema',node);
+        props.setSourceBrowser({field:"", value:"", text:"", shortnm:""});
         //node.data.children[0].HEADTEXT = node.HEADTEXT;
         //node.data.childer[0].HEADTEXT = node.HEADTEXT;
         click(node)
       }
       function foClick(node) {
+        console.log('what is selentity',SELENTITY)
+        console.log('what is node ',node)
         PGMCODE = SELENTITY.data.CODEDATA.filter(
           (pcode) => (pcode.MVARDB === node.ID || pcode.SVAR1 === node.ID || pcode.SVAR2 === node.ID || pcode.SVAR3 === node.ID || pcode.SVAR4 === node.ID 
         ));
@@ -689,23 +819,26 @@ var svgHeight = height+ num*500;
         SELENTITY.data.children[0].HEADTEXT = node.TEXT;
         SELENTITY.data.children[0].HEADID = node.ID;
         console.log("inside foclick click===", SELENTITY);
-        click(SELENTITY);
-        console.log("whats in rBrowser==", rBrowser);
-        ////added by seema for global where used
-        if (rBrowser.slctd===1){
-        console.log("off karna chahte hai ham")
-          setrBrowser({slctd:0,rBrowserData:[]});
-           
-      }
-        else 
-        {
-          console.log("on karna chahte hai ham")
-        var tempData = pgmcodeentity.filter(pcode=>(pcode.MVARDB === node.ID || pcode.SVAR1 === node.ID || pcode.SVAR2 === node.ID || pcode.SVAR3 === node.ID || pcode.SVAR4 === node.ID 
-          ));
+        //click(SELENTITY);
         
-        console.log("yeh dikhao== ", tempData, pgmcodeentity); 
-        setrBrowser({slctd:1,rBrowserData:tempData});
-        } 
+        ////added by seema for global where used
+        console.log("on karna chahte hai ham")
+           
+        var item = 
+        {
+              field: "PGMID",
+              text: "",
+              value:"",
+              shortnm:node.ID,
+            };
+            console.log("whats in item====", item)
+        props.setSourceBrowser(item);
+        // var tempData = pgmcodeentity.filter(pcode=>(pcode.MVARDB === node.ID || pcode.SVAR1 === node.ID || pcode.SVAR2 === node.ID || pcode.SVAR3 === node.ID || pcode.SVAR4 === node.ID 
+        //   ));
+        
+        // console.log("yeh dikhao== ", tempData, pgmcodeentity); 
+        // setrBrowser({slctd:1,rBrowserData:tempData});
+        
         ////added by seema for global where used ends here
         console.log('foclick node',SELENTITY.data.CODEDATA, node)
         
@@ -732,7 +865,8 @@ var svgHeight = height+ num*500;
           if (d.data.ID === d.data.TEXT)
             return "translate(" + d.y + "," + (d.x) + ")";
           else
-          return "translate(" + (d.y-190) + "," + (-20) + ")";
+         // return "translate(" + (d.y-190) + "," + (-20) + ")";
+         return "translate(" + (d.y) + "," + (0) + ")";
           /* This is the actual point of translation- y is for x since it is horiz. tree */
           //return "translate(" + (d.x - 300) + "," + (d.y - 300) + ")";
         });
@@ -859,14 +993,21 @@ var svgHeight = height+ num*500;
         
         if(s.depth ==1){
           let path;
-          console.log("source/des==", s);
+          //console.log("source/des==", s);
           var x1 = s.x+15;
           var y1 = s.y;
           var x2 = x1;
           var diff = 25; //random
           var y2 = s.y-diff;
           if(s.id == 2){
-              path = `M ${y1} ${x1} L ${y2} ${x2} L ${y2} ${x3+15} M ${y2} ${x2} L ${y2-50} ${x2}`
+             path = `M ${y1} ${x1} L ${y2} ${x2} L ${y2} ${x3+15}`
+             if(mainIndex == 1){
+               console.log('in check');
+              path =`M ${y1} ${x1} L ${y2} ${x2} L ${y2} ${x3+15} M ${y2} ${x2} L ${y2-50} ${x2}`
+             }
+          }
+          else if(s.id == mainIndex+1){
+            path = `M ${y1} ${x1} L ${y2} ${x2} L ${y2} ${x3+15} M ${y2} ${x2} L ${y2-50} ${x2}`
           }
           else
            path = `M ${y1} ${x1} L ${y2} ${x2} `;
@@ -913,16 +1054,22 @@ var svgHeight = height+ num*500;
       }
     }
   }
+  function handleCloseClick()
+    {
+        console.log("clicking close", d3.select("foreignObject[id^='rightSvg']"));
+        d3.select("foreignObject[id^='rightSvg']").remove();
+        
+    }
   //console.log("FTXT===", FTXT);
-  return (
-    <div id="maincontainer">
-      <div className={classes.caption}>
+  return  props.DUDFileData.DUDFileData==""?null: props.mainWindowState==="PGMSC_DU_FILE" ? null : (
+    <div id="dudfilemaincontainer" style={{position:"relative"}}>
+    {/*  <div className={classes.caption}>
         <span className={classes.span}>
           Data Usage Diagram  {props.DUDFileData.entity === ""?null :
           props.DUDFileData.entity.value === "default" ? "":props.DUDFileData.entity.value}
         </span>
-      </div>
-      <div id="containerTree">
+      </div> */}
+      <div id="dudfilecontainerTree">
         <div className={classes.d3contextMenu} id="d3contextMenu">
            <div className={classes.d3contextItem} onClick={handleDataUsageFile} >
              <p className={classes.d3menuItem}>{`Go to DataUsage`}</p>
@@ -941,208 +1088,10 @@ var svgHeight = height+ num*500;
         </div>
         {/*drawDFD()*/}
       </div>
-      {/*Adding Rmenu concept */}
-      
-      <div id="Rmenu" className={classes.Rmenu1} style={rBrowserstyle}>
-      <TableContainer component={Paper} style={{maxHeight:"700px"}}>
-        <Table className={classes.tabExp} stickyHeader aria-label="sticky table" >
-           <colgroup><col style={{width:'15%'}}/><col style={{width:'10%'}}/><col style={{width:'75%'}}/></colgroup>
-          {/*<TableHead >
-            <TableRow>
-              <TableCell align="left" colSpan={3} className={classes.tabhead}> {rBrowser.rBrowserData[0].MVARDB==""?rBrowser.rBrowserData[0].MVAR : rBrowserData[0].MVARDB}</TableCell>
-            </TableRow>
-          </TableHead>*/}
-          <TableHead >
-            <TableRow>
-              <TableCell align="left" colSpan={3} className={classes.tabhead}> {rBrowser.rBrowserData.length>0? rBrowser.rBrowserData[0].MVARDB==""?rBrowser.rBrowserData[0].MVAR : rBrowser.rBrowserData[0].MVARDB:""}</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>  
-          {rBrowser.rBrowserData.map((row, index) => (
-            <TableRow onClick = {(e)=>  handlerBrowserClickHead(e, row)} style={{cursor:"pointer"}}>
-              
-               {index==0?<TableCell  align="left" className={classes.ceTab}><pre  style={{display:"inline"}}>{row.PGMID}</pre></TableCell>:(
-                 row.PGMID!==rBrowser.rBrowserData[index-1].PGMID ?<TableCell align="left"  className={classes.ceTab}><pre  style={{display:"inline"}}>{row.PGMID}</pre></TableCell>:
-                 <TableCell align="center"  className={classes.ceTab}><pre  style={{display:"inline"}}></pre></TableCell>
-               )}
-                  <TableCell align="left"  className={classes.ceTab}>
-                  <pre style={{display:"inline"}}>{row.ID}</pre>
-                  </TableCell>
-                  <TableCell align="left" className={classes.ceTab}>
-                  <pre className={classes.trExp} style={{display:"inline"}}>{row.TEXT}</pre></TableCell>
-               </TableRow> )) }
-          </TableBody>
-        </Table>
-      </TableContainer>
-   </div>
-      {/*Adding Rmenu concept ends here*/}
-      {/*Adding Source Browser concept */}
-      <div id='ceDiv' className={classes.ceDiv1} style={sBrowserstyle}>
      
-      <TableContainer id='ceDivC' component={Paper} style={{maxHeight:"700px"}}>
+      <CodeEditor {...props}/>
       
-      <Table className={classes.tabSB} stickyHeader aria-label="sticky table">
-    <colgroup>
-      <col style={{width:'10%'}}/>
-      <col style={{width:'70%'}}/>
-      <col style={{width:'20%'}}/>
-          </colgroup>
-          <TableHead >
-            <TableRow>
-            <TableCell align="left" colSpan={2} className={classes.tabhead}>
-            <Button
-            aria-describedby="simple-popover"
-            variant="contained"
-            color="primary"
-            onClick={handleDSEClick}
-            className={classes.ButDSE}
-          >
-            Draw Subroutine Explosion
-          </Button>
-            </TableCell>
-            <TableCell align="right" className={classes.tabhead}>
-              <IconButton 
-              aria-label="close" 
-              className={classes.closeButton} 
-              onClick={handleSBClose}
-            >
-              <CloseIcon />
-            </IconButton></TableCell>
-          </TableRow>
-           
-   
-    
-            <TableRow>
-              <TableCell className={classes.tabhead}>No.</TableCell>
-              <TableCell className={classes.tabhead} align="center">Statement</TableCell>
-              <TableCell className={classes.tabhead} align="center">Date</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody> 
-
-          {props.sourceBrowserData.hasOwnProperty('pgmCodeData') ? (
-            props.sourceBrowserData.pgmCodeData.map((row, index) => (
-              <TableRow key={row.ID} id={`row`+index}
-                        
-              >
-                <TableCell align="right" style={{cursor:"pointer"}} className={classes.ceTab}
-                // onClick = {()=>  handleLineClick()}
-                >
-                <pre style={{display:"inline"}}>{row.LineNum}</pre>
-                </TableCell>
-          
-
-                 {row.Stn.substr(0,1)==='D' && row.Stn.substr(1,1)===' ' ? (
-                <TableCell align="left" style={row.Stn.substr(0,1) === '*' ? {color:"rgb(102, 179, 102)"} :{color:"lightgray"}} 
-                className={classes.ceTab}><pre id={row.LineNum} className={highlightIndex === index? classes.highExp : ""} style={{display:"inline"}}>
-                {row.Stn.substr(0,1)}{row.Stn.substr(1,1)}<span onClick = {(e)=>  handleVariableClick(e)} style={{cursor:"pointer", color:"lightblue"}}>
-              
-                {row.Stn.substr(2,row.Stn.substr(2).indexOf(' '))}</span>{row.Stn.substr(row.Stn.substr(2).indexOf(' ')+2)}
-                </pre></TableCell>):
-                (
-                 
-                  <TableCell align="left" style={row.Stn.substr(1,1) === '*' ? {color:"rgb(102, 179, 102)"} :{color:"lightgray"}} 
-                  className={classes.ceTab}><pre id={row.LineNum} className={highlightIndex === index ? classes.highExp : ""} style={{display:"inline"}}>
-                  {highlightStn(row.Stn)}
-                </pre></TableCell>)}
-                
-                <TableCell align="right" className={classes.ceTab}><pre style={{display:"inline"}}>
-                {row.StnDate}
-                </pre></TableCell>
-              </TableRow>
-           )) ) : 
-            "" }
-            
-            
-           
-          </TableBody>
-        </Table>
-      </TableContainer>
-      
-    </div>
-
-      {/*Adding Source Browser concept ends here */}
-      {/*Adding DSE concept and where used */}
-      <div id="DSEdiv" className={classes.DSEdiv1} style={DSEstyle}>
-    <TableContainer component={Paper} style={{maxHeight:"700px"}}>
-      
-      <Table className={classes.tabSB} stickyHeader aria-label="sticky table" >
-    
-          <TableHead >
-            <TableRow>
-              <TableCell align="left" width="80%" className={classes.tabhead}>Draw SubRoutine Explosion</TableCell>
-              <TableCell align="right" width="20%" className={classes.tabhead}>
-              <IconButton 
-              aria-label="close" 
-              className={classes.closeButton} 
-              onClick={handleDSEClick}
-            >
-              <CloseIcon />
-            </IconButton></TableCell>
-              </TableRow>
-          </TableHead>
-          <TableBody> 
-
-          {props.sourceBrowserData.hasOwnProperty('PrcCallsExplosionData') ? (
-            props.sourceBrowserData.PrcCallsExplosionData.map((row) => (
-              <TableRow key={row.ID}>
-                <TableCell colSpan={2} align="left"
-                   style={{color:"lightgray"}} className={classes.ceTab}><pre style={{display:"inline"}}>{row.STN}</pre></TableCell>
-                </TableRow>
-           )) ) : 
-            "" }
-          </TableBody>
-        </Table>
-      </TableContainer>
-    
-    </div>
-
-    <div id="Expdiv" className={classes.DSEdiv1} style={Expstyle}>
-    <TableContainer component={Paper} style={{maxHeight:"700px"}}>
-      
-      <Table className={classes.tabExp} stickyHeader aria-label="sticky table" >
-      <colgroup>
-      <col style={{width:'12%'}}/>
-      <col style={{width:'68%'}}/>
-      <col style={{width:'20%'}}/>
-          </colgroup>
-          <TableHead >
-            <TableRow >
-              <TableCell align="left" colSpan={2} className={classes.tabhead}>WhereUsed </TableCell>
-              <TableCell align="right" className={classes.tabhead}>
-              <IconButton 
-              aria-label="close" 
-              className={classes.closeButton} 
-              onClick={handleExpClose}
-            >
-              <CloseIcon />
-            </IconButton></TableCell>
-              </TableRow>
-          </TableHead>
-          <TableBody> 
-
-          {
-            
-            ExpData.whereusedData.map((row) => (
-
-                <TableRow key={row.LineNum} onClick = {(e)=>  goToLineClick(e, row)} style={{cursor:"pointer"}} >
-                  <TableCell align="left"  className={classes.ceTab}>
-                  <pre style={{display:"inline"}}>{row.LineNum}</pre>
-                  </TableCell>
-                  
-                 <TableCell align="left" colSpan={2} 
-                   style={row.Stn.substr(0,1) === '*' ? {color:"rgb(102, 179, 102)"} :{color:"lightgray"}} 
-            className={classes.ceTab}><pre className={classes.trExp} style={{display:"inline"}}>{row.Stn}</pre></TableCell>
-
-            </TableRow>
-          
-                ))  }
-          </TableBody>
-        </Table>
-      </TableContainer>
-    
-    </div>
-      {/*Adding DSE concept and where used ends here */}
+     
     </div>
   );
   //////function related to source browser
@@ -1235,12 +1184,12 @@ function handleSBClose(){
     value: "",
     shortnm:"",
     })
-    setsourceBrowser(0);
+    // setsourceBrowser(0);
     //setExpData({slctd:0, whereusedData:[]})
-    if (rBrowser.slcrd===1)setrBrowser({slctd:0,rBrowserData:[]});
-          if (sourceBrowser===1) setsourceBrowser(0)
-          if(selectedDSE===1) setselDSE(0);
-          if(ExpData===1) setExpData({slctd:0, whereusedData:[]})
+    // if (rBrowser.slcrd===1)setrBrowser({slctd:0,rBrowserData:[]});
+    //       if (sourceBrowser===1) setsourceBrowser(0)
+    //       if(selectedDSE===1) setselDSE(0);
+    //       if(ExpData===1) setExpData({slctd:0, whereusedData:[]})
 }
 function handleExpClose(event) {
     event.preventDefault();

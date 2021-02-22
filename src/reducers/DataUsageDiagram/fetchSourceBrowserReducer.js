@@ -4,6 +4,7 @@ const INITIAL_STATE = {
    rBrowser:"",
   pgmID:"",
   program:"",
+  shortNm:"",
 }
                    
   
@@ -17,7 +18,8 @@ const INITIAL_STATE = {
           PrcCallsExplosionData:action.PrcCallsExplosionData,
         rBrowser:action.rBrowser,
         pgmID:action.pgmID,
-        program:action.program
+        program:action.program,
+        shortNm:action.shortNm
         };
       default:
         return state;

@@ -228,14 +228,17 @@ const styles = (theme) => ({
   },
   
    /////////source browser
+  
    ceDiv :  {
     // backgroundColor: "#262626",
     // padding: "5px", 
     // borderLeft: "solid 3px #262626",
     borderRadius : "4px", 
-    width:"35%",
+    
     position: "absolute",
-    left: "35%",
+    // left: "35%",
+    
+    //width:"700px",
     top: "45px",
     ////height:"90%",
     
@@ -266,14 +269,15 @@ ceTab : {
 
   Rmenu :{
     position: "absolute",
-    right: "1%",
+    
     top: "45px",
-    width: "25%",
     // border: "1px solid",
     //height:"70%",
+    
+    width:"400px",
     backgroundColor: "#262626",
   },
-  Rmenu1 :{
+  /*Rmenu1 :{
     position: "absolute",
     left: "1200px",
     top: "45px",
@@ -281,13 +285,14 @@ ceTab : {
     // border: "1px solid",
     height:"700px",
     backgroundColor: "#262626",
-  },
+  },*/
   DSEdiv :{
     position: "absolute",
     left: "1%",
     top: "45px",
     // width: "400px",
-    width: "30%",
+    // width: "30%",
+    width:"400px",
     height:"70%",
     backgroundColor: "#262626",
     //border: "1px solid",
@@ -305,7 +310,7 @@ ceTab : {
     
   },
   SBcontainer : {
-    position: "relative",
+    
     height:"800px",
   },
   ButDSE : {
@@ -551,8 +556,14 @@ color :"black",
     cursor:"pointer",
     color:"white",
     //width: "80px"
-  }
+  },
   
+  highlight:{
+    backgroundColor:"lightblue",
+  },
+  nohighlight:{
+    backgroundColor:"white",
+  },
   
 });
 

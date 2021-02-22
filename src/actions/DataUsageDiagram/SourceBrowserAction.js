@@ -2,7 +2,7 @@ import API_ADDRESS from "../../../server/apiaddress";
 export const setSourceBrowser = (param) => async (dispatch, res) => {
   console.log("param in sourcebrowser==", param);
   
-  if (param.value==="")
+  if (param.shortnm==="")
   {
     dispatch({
       type: "FETCH_SOURCEBROWSER",
@@ -19,7 +19,8 @@ else{
   
   let qurl = "";
   
-      
+if (param.value!=="")   ///////program Data Usage
+{
 qurl = `${API_ADDRESS}/readFile/${param.value}`;
 
   await fetch(qurl)
@@ -50,10 +51,29 @@ qurl = `${API_ADDRESS}/readFile/${param.value}`;
         PrcCallsExplosionData:json1.result.PrcCallsExplosionData,
         rBrowser:json1.result.RBrowser,
         pgmID:json1.result.pgmID,
-        program:param
+        program:param,
+        shortNm:param.shortnm
       });
     });
   });
+}////////ends for file data usage case
+else{   //Files data usage
+  var qurl1 = `${API_ADDRESS}/SourceBrowser/${shortnm}`;
+  await fetch(qurl1)
+  .then((res) => res.json())
+  .then(async (json1) => {
+   console.log("show SourceBrowser data===", json1.result);
+ dispatch({
+   type: "FETCH_SOURCEBROWSER",
+   payload : [],
+   PrcCallsExplosionData:[],
+   rBrowser:json1.result.RBrowser,
+   pgmID:"",
+   program:param,
+   shortNm:param.shortnm
+ });
+});
+}
 }
 };
 function extractfields(arr1){

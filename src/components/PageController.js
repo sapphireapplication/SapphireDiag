@@ -14,6 +14,7 @@ import {setSourceBrowser} from "../actions/DataUsageDiagram/SourceBrowserAction"
 import {setMainWindowState} from "../actions/setMainWindowAction";
 import { setDMDChart} from "../actions/DMD/DMDDataAction.js";
 import { setEntityData } from "../actions/EntityDataActions";
+
 //import { setForProgram } from "../actions/setForProgram";
 const mapStateToProps = (state) => {
   return {
@@ -60,7 +61,7 @@ function PageController(props) {
         
         props.setProgramData()
           .then((json) => 
-            props.setSourceBrowser({field:"", value:"", text:""})
+            props.setSourceBrowser({field:"", value:"", text:"", shortnm:""})
             .then((json)=>
             props.setDataUsageProgram({field:"", value:"", text:""})
             .then((json)=>
@@ -85,7 +86,7 @@ function PageController(props) {
         
          props.setEntityData()
           .then((json) => 
-            props.setSourceBrowser({field:"", value:"", text:""})
+            props.setSourceBrowser({field:"", value:"", text:"", shortnm:""})
             .then((json)=>
             props.setDataUsageProgram({field:"", value:"", text:""})
             .then((json)=>
@@ -150,7 +151,7 @@ function PageController(props) {
       
         props.setDataUsageFileList()
         .then((json)=>
-            props.setDataUsageFile({value:"default", text:""})
+            props.setDataUsageFile({value:"default", text:""},props)
                .then((json) =>
                props.setSourceBrowser({field: "PGMID",
                text: "",
@@ -180,31 +181,34 @@ function PageController(props) {
       case "PGMSC_DU":  //Data Usage
       console.log("inside PGMSCDU");
 
-            
+           props.setSourceBrowser({field:"", value:"", text:"", shortnm:""})
+           .then(()=>
             props.setDiagramType("DATA_USAGE_PGM")
           
               .then((json) =>
-              
-                props.setDataUsageProgramList()
+              props.setMainWindowState(id)
+                
                 .then((json)=>
                     props.setDataUsageProgram(param2)
                         .then((json) =>
-                        props.setMainWindowState(id)
-             .then (json=>console.log("hello")
-                        //setLoad("PGMSC_DU")
+                        props.setDataUsageProgramList()
+             .then (json=>{console.log("hello")
+                        setLoad("PGMSC_DU")}
               )
               )
-               )
+               ) )
               );
           break;
        case "PGMSC_DU_FILE":
+        console.log('param2',param2)
         props.setDiagramType("DATA_USAGE_FILE")
+        
         
         .then((json) =>
         
           props.setDataUsageFileList()
           .then((json)=>
-              props.setDataUsageFile({value:"default", text:""})
+              props.setDataUsageFile(param2,props)
                  .then((json) =>
                  props.setSourceBrowser({field: "PGMID",
                  text: "",

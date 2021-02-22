@@ -91,6 +91,7 @@ var svgHeight = height+ num*500;
        .attr('y', y)
        .attr('style', 'background-color:white;border:1px black solid')
        .append('svg')
+       .attr('id','check')
        .attr('width', width)
        .attr('height', svgHeight)
        .append("g")
@@ -357,7 +358,7 @@ var svgHeight = height+ num*500;
               return 'table1'
             }
         });
-       var columns=["Files","Programs"]
+       
       //nodeFo
       svg.selectAll('#table2').selectAll('tr').remove();
       
@@ -525,6 +526,10 @@ var svgHeight = height+ num*500;
           //return e.FTXT + "(" + e.SHORTNM + ")";
           return e.ID + ": " + e.TEXT ;
         });
+        //d3.select("#main1").selectAll(".noder").raise()
+        d3.select("#rightSvggrpidAPS0300").raise()
+        
+        
 
         //Shilpi List Changes start
       /*  var nodeFo2 = svg.selectAll('#table1').append("tbody");
@@ -614,7 +619,7 @@ var svgHeight = height+ num*500;
               //codeData:codeData,
               shortnm:shortnm,
             };
-         props.pgmLinksHandler("pgmSourceBrowser", item);
+         //props.pgmLinksHandler("pgmSourceBrowser", item);
 
         // props.linkClickHandler(
         //   event,
@@ -667,6 +672,7 @@ var svgHeight = height+ num*500;
 
       }
       function foClick1(node) {
+        props.setSourceBrowser({field:"", value:"", text:"", shortnm:""})
         console.log('clicked node',node)
         //node.data.children[0].HEADTEXT = node.HEADTEXT;
         //node.data.childer[0].HEADTEXT = node.HEADTEXT;
@@ -686,7 +692,16 @@ var svgHeight = height+ num*500;
         SELENTITY.data.children[0].HEADID = node.ID;
         console.log("inside foclick click===", SELENTITY);
         //window.scrollBy(750,0)
-        click(SELENTITY);
+        var item = 
+            {
+              field: props.DUDProgramData.program.field,
+              text: props.DUDProgramData.program.text,
+              value: props.DUDProgramData.program.value,
+              shortnm:node.ID,
+            };
+            console.log("whats in item====", item, window.screen)
+        props.setSourceBrowser(item);
+       // click(SELENTITY);
       }
 
       function handleMouseOver(selEntity) {
@@ -891,6 +906,9 @@ var svgHeight = height+ num*500;
         }
         update(d);
       }
+      d3.select("#rightSvggrpidAPS0300").raise()
     }
   
   }
+
+  

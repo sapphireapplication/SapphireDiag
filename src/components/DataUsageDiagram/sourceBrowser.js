@@ -9,16 +9,11 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
+
 import Button from "@material-ui/core/Button";
 import CloseIcon from '@material-ui/icons/Close';
 import IconButton from '@material-ui/core/IconButton';
-import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
-import { $CombinedState } from "redux";
-import $ from 'jquery';
-import { stratify } from "d3";
+
 
 
 const useStyles = makeStyles({
@@ -29,6 +24,20 @@ const useStyles = makeStyles({
 
  function CodeEditor(props) {
   const { classes } = props;
+  
+
+  const Rmenuleftpos = {
+   
+    left: window.screen.width - 400 + "px", 
+     // 400 is width of rmenu
+
+  };
+  
+  const ceDivleftpos =  (selectedDSE == 0 && ExpData.slctd == 0) ? { left : window.screen.width - 1110 + "px", width:"700px"}: 
+  { left : window.screen.width - 1010 + "px",width:"600px"};
+    
+
+  
   console.log("inside codeEditor ===", props);
   const [selectedDSE, setselDSE] = React.useState(0);
   const [ExpData, setExpData] = React.useState({slctd:0, whereusedData:[]});
@@ -51,19 +60,21 @@ const useStyles = makeStyles({
 
       console.log("u clicked==", props.sourceBrowserData.pgmID, row.PGMID);
       if (row.PGMID.trim() !==props.sourceBrowserData.pgmID){
-        var item = [
+        var item = 
           {
             field: "PGMID",
             text: "",
             value: row.PGMID,
             shortnm:props.sourceBrowserData.rBrowser[0].MVARDB==""?props.sourceBrowserData.rBrowser[0].MVAR:props.sourceBrowserData.rBrowser[0].MVARDB,
-          }];
+          };
           ////if Explorer window open, close it
           if (ExpData.slctd === 1)
                  handleExpClose(event);
                  setselDSE(0);//close DSE window if open
 
-          props.pgmLinksHandler("pgmSourceBrowser", item);
+          // props.pgmLinksHandler("pgmSourceBrowser", item);
+          console.log("whats in item===", item);
+          props.setSourceBrowser(item);
           
         
        console.log("open another source browser",item);
@@ -179,29 +190,17 @@ function checkforstring(stn)
 //
 }
 function handleSBClose(){
-  props.SBCloseHandler();
+  props.setSourceBrowser({field:"", value:"", text:"", shortnm:""});
 }
 
  
 
-  return props.sourceBrowserData.pgmCodeData === ""? null : (
+  //return props.sourceBrowserData.pgmCodeData.length === 0? null : (
+    return props.sourceBrowserData.rBrowser.length === 0? null : (
     <div id="SBcontainer" className={classes.SBcontainer} style={{height:"100vw", width:"100vw"}}>
-    {/*<div className={classes.caption}>
-    <div>
-        <IconButton 
-        aria-label="close" 
-        align="left"
-        className={classes.closeButton1} 
-        onClick={handleSBClose}
-      >
-        <CloseIcon />
-      </IconButton></div>
-        <span className={classes.span}>
-          Source Browser ({props.sourceBrowserData.program.value})
+    
            
-        </span>
-  </div>*/}
-     <div id="Rmenu" className={classes.Rmenu}>
+     <div id="Rmenu" style={Rmenuleftpos} className = {classes.Rmenu}>
         <TableContainer component={Paper} style={{maxHeight:"700px"}}>
           <Table className={classes.tabExp} stickyHeader aria-label="sticky table" >
              <colgroup><col style={{width:'15%'}}/><col style={{width:'10%'}}/><col style={{width:'75%'}}/></colgroup>
@@ -229,8 +228,8 @@ function handleSBClose(){
         </TableContainer>
      </div>
 
-
-      <div id='ceDiv' className={classes.ceDiv}>
+     {props.sourceBrowserData.pgmCodeData.length ===0 ? null :
+      <div id='ceDiv' className={classes.ceDiv} style={ceDivleftpos} >
      
       <TableContainer id='ceDivC' component={Paper} style={{maxHeight:"700px"}}>
       
@@ -241,11 +240,9 @@ function handleSBClose(){
       <col style={{width:'20%'}}/>
           </colgroup>
           <TableHead >
-         {/* <TableRow>
-              <TableCell align="center" colSpan={3}>{props.ForProgram[0].value}</TableCell>
-          </TableRow>*/}
+        
             <TableRow>
-            <TableCell align="left" colSpan={3} className={classes.tabhead}>
+            <TableCell align="left" colSpan={2} className={classes.tabhead}>
             <Button
             aria-describedby="simple-popover"
             variant="contained"
@@ -256,6 +253,15 @@ function handleSBClose(){
             Draw Subroutine Explosion
           </Button>
             </TableCell>
+            <TableCell align="right" colSpan={1} className={classes.tabhead} >
+            <IconButton   
+            aria-label="close" 
+            align="right"
+            className={classes.closeButton} 
+            onClick={handleSBClose}
+          >
+            <CloseIcon />
+          </IconButton></TableCell>
           </TableRow>
            
    
@@ -323,7 +329,7 @@ function handleSBClose(){
         </Table>
       </TableContainer>
       
-    </div>
+    </div>}
     <div id="DSEdiv" className={classes.DSEdiv} style={DSEstyle}>
     <TableContainer component={Paper} style={{maxHeight:"700px"}}>
       

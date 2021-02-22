@@ -1,4 +1,4 @@
-000200070317     H*�COPYRIGHT DATABOROUGH LTD 2005                                          
+000200070317     H*�COPYRIGHT DATABOROUGH cusenq LTD 2005                                          
 000300040512     H*�--------------------------------------------------------------------    
 000400050901     H debug(*yes) copyright('Databorough Ltd. 2005') datedit(*dmy)             
 000500040512                                                                                

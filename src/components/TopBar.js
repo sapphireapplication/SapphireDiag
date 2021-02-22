@@ -8,7 +8,7 @@ import IconButton from "@material-ui/core/IconButton";
 import ContactSupportIcon from "@material-ui/icons/ContactSupport";
 import DialogRenderer from "./DialogRenderer";
 import logo from "../images/logo.png";
-import sapphirelogo from "../images/sapphirefinal.png";
+import sapphirelogo from "../images/pngegg.png";
 import Button from "@material-ui/core/Button";
 //import DFDDiagram from "./DFDDiagram";
 
@@ -124,7 +124,7 @@ function Topbar(props) {
             {props.titleInfo ? (
               <Box>
                 <Typography variant="h5" noWrap>
-                  {props.titleInfo.value}
+                  {/*props.titleInfo.value*/}
                 </Typography>
               </Box>
             ) : (
@@ -134,7 +134,7 @@ function Topbar(props) {
             {props.subTitleInfo ? (
               <Box>
                 <Typography variant="caption" noWrap>
-                  {props.subTitleInfo.value}
+                  {/*props.subTitleInfo.value*/}
                 </Typography>
               </Box>
             ) : (
@@ -187,52 +187,7 @@ function Topbar(props) {
           </Box>
           
 
-          {/* Container for notification and profile info */}
-          <Box className={classes.profileBox}>
-            {props.notificationInfo ? (
-              <Box>
-                <AnchorMenu
-                  key={props.notificationInfo.type}
-                  item={props.notificationInfo}
-                  {...props}
-                />
-              </Box>
-            ) : (
-              ""
-            )}
-            <Box>
-              <IconButton
-                aria-label="contact"
-                id="contactInfo"
-                className={classes.contactBtn}
-                onClick={(e) => handleDialogOpen(e)}
-              >
-                <ContactSupportIcon />
-              </IconButton>
-              {props.contactInfo ? (
-                <DialogRenderer
-                  open={open}
-                  dialogTitle={dialogTitle}
-                  dialogContent={dialogContent}
-                  handleDialogClose={handleDialogClose}
-                  {...props}
-                />
-              ) : (
-                ""
-              )}
-            </Box>
-            {props.accountInfo ? (
-              <Box>
-                <AnchorMenu
-                  key={props.accountInfo.type}
-                  item={props.accountInfo}
-                  {...props}
-                />
-              </Box>
-            ) : (
-              ""
-            )}
-          </Box>
+          
         </Toolbar>
       </AppBar>
     </div>

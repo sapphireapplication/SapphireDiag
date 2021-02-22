@@ -20,7 +20,9 @@ function DFDRenderer(props) {
   // ) : props.mainWindowState === "DATAUSAGE"?<DUDRenderer {...props} /> : props.screenId === "PGMSC_DU" ?
   // <div><PgmStruChart {...props} /><DataUsageDiagram {...props}/></div> :null 
 
-  return props.mainWindowState === "PGMSCHART" || props.mainWindowState === "PGMSC_DU"  ? (
+  return props.mainWindowState === 'PGMSCHART' ||
+    props.mainWindowState === 'PGMSC_DU' ||
+    props.mainWindowState === 'PGMSC_DU_FILE' ? (
     <PgmStruChart {...props} />
   ) : props.mainWindowState === "DMD" ? (
     <DMDChart {...props} />

@@ -7,8 +7,9 @@ const INITIAL_STATE = {
   diagData: [],
   annotated: false,
   schemaBoxes: [],
-  program:""
-  
+  fileList: {},
+  program: '',
+  entities: [],
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -30,6 +31,8 @@ export default (state = INITIAL_STATE, action) => {
           action.pgm
         ),
         schemaBoxes: [...state.schemaBoxes, ...action.schemaBoxes],
+        fileList: { ...state.fileList, ...action.fileList },
+        entities: action.entPrograms,
         annotated: true,
         program:action.program
         

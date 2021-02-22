@@ -14,9 +14,9 @@ const conn = mysql.createConnection({
   //password: "Mysql@123", //for pipeline server machine
   password: "mysql123", //for local shilpi machine
   //database: "cdemd014",
-  // database: "custd008",
+ // database: "custd008",
   database:"mvxd008",
-//  database: "custd008sb",
+ //database: "custd008",
 //insecureAuth : 'true',
 });
 
@@ -95,29 +95,40 @@ app.get('/entsch/:entids', (req, res ) => {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-app.get("/PgmDefs", async(req, res) => {
-  console.log("inside pgmdefs");
+app.get('/PgmDefs', async (req, res) => {
+  console.log('inside pgmdefs');
   var programs = [];
   var chartArray = [];
+  var chartArrayWithoutD = [];
   //var dbname = [req.params.dbname];
 
   let sql = `SELECT  * FROM  PGMDEFS `;
-  let query = conn.query(sql, async(err, results) => {
+  let query = conn.query(sql, async (err, results) => {
     if (err) throw err;
     programs = results;
     /* query to fetch pgmcalls */
-    let sql1 = `SELECT * FROM PGMCALLS WHERE PGMID <> CLDPGM AND CALLCLS = 'D' AND EXCPGM = ''`
+    let sql1 = `SELECT * FROM PGMCALLS WHERE PGMID <> CLDPGM AND CALLCLS = 'D' AND EXCPGM = ''`;
     let query1 = await conn.query(sql1, async (err1, results1) => {
       if (err1) throw err1;
-      console.log("shilpi RESULTS in PGMCALLS==", results1);
       chartArray = results1;
-      res.send(JSON.stringify({ status: 200, error: null, 
-        response: {
-        programs: programs,
-        chartArray: chartArray
-         }, 
-        }));
+      console.log('shilpi RESULTS in PGMCALLS==', results1);
+      /*query to fetch pgmcalls with callcls=''*/
+      let sql2 = `SELECT * FROM PGMCALLS WHERE PGMID <> CLDPGM AND CALLCLS = '' AND EXCPGM = ''`;
+      let query2 = await conn.query(sql2, async (err2, results2) => {
+        chartArrayWithoutD = results2;
+        res.send(
+          JSON.stringify({
+            status: 200,
+            error: null,
+            response: {
+              programs: programs,
+              chartArray: chartArray,
+              chartArrayWithoutD: chartArrayWithoutD,
+            },
+          })
+        );
       });
+    });
   });
 });
 
@@ -296,7 +307,7 @@ app.get("/DataUsageDiagram/File/:entid", async (req, res) => {
   var pgmcode = [];
   var entschema = [];
 
-  let sql = `SELECT  A.*, B.PGMTX FROM  PGMFILES AS A LEFT JOIN PGMDEFS AS B ON trim(A.PGMID)=trim(B.PGMID) WHERE TRIM(A.ENTID)='${entid}' `;
+  let sql = `SELECT  A.*, B.PGMTX FROM  PGMFILES AS A LEFT JOIN PGMDEFS AS B ON trim(A.PGMID)=trim(B.PGMID) WHERE TRIM(A.ENTID)='${entid}' order by WHFUSG DESC `;
   let query = await conn.query(sql, async (err, results) => {
     if (err) throw err;
     //console.log("RESULTS in DFD==", results);
@@ -569,24 +580,58 @@ app.get("/PgmCallingParams/:program/:cldprogram", async (req, res) => {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-app.get("/PgmDiagSchemas/:pgms", (req, res) => {
+app.get('/PgmDiagSchemas/:pgms', (req, res) => {
+  var entities = {};
+  var entPrograms = [];
   const pgms = JSON.parse(req.params.pgms);
-  console.log('shilpi PGMS',pgms);
+  console.log('shilpi PGMS', pgms);
   //console.log("shilpi inside PgmSchema", req.params.pgmid);
-  let pgmIdValues = "(";
-    pgms.map((id, index) => {
-      if (index === 0) pgmIdValues += "'" + id + "'";
-      else pgmIdValues += "," + "'" + id + "'";
-    });
-    pgmIdValues += ")";
-   console.log('shilpi pgmIdValues ',pgmIdValues)
-   let sql = `SELECT * FROM PGMSCMDB WHERE PGMID IN ${pgmIdValues};`;
-   console.log("SQL===", sql);
-   let query = conn.query(sql, (err, results) => {
-    if (err) throw err;
-    res.send(JSON.stringify({ status: 200, error: null, response: results }));
+  let pgmIdValues = '(';
+  pgms.map((id, index) => {
+    if (index === 0) pgmIdValues += "'" + id + "'";
+    else pgmIdValues += ',' + "'" + id + "'";
   });
-  
+  pgmIdValues += ')';
+  console.log('shilpi pgmIdValues ', pgmIdValues);
+  let sql = `SELECT * FROM PGMSCMDB WHERE PGMID IN ${pgmIdValues};`;
+  console.log('SQL===', sql);
+  let query = conn.query(sql, (err, results) => {
+    if (err) throw err;
+    let sql1 = `SELECT  A.*, B.PGMTX, C.ENTTX FROM  PGMFILES AS A LEFT JOIN PGMDEFS AS B ON trim(A.PGMID)=trim(B.PGMID) LEFT JOIN ENTITIES AS C ON trim(A.ENTID)=trim(C.ENTID)  WHERE TRIM(A.PGMID) IN ${pgmIdValues}`;
+    let query1 = conn.query(sql1, (err, results2) => {
+      results2.map((ent) => {
+        var entpgmid = ent.PGMID.trim();
+        if (!(entpgmid in entities)) {
+          entities[entpgmid] = [];
+        }
+        if (ent.ENTID !== null) entities[entpgmid].push(`${ent.ENTID}`);
+      });
+      // console.log('query ', entities);
+      let sql2 = `SELECT * FROM ENTITIES`;
+      let query2 = conn.query(sql2, (err, results3) => {
+        entPrograms = results3;
+        res.send(
+          JSON.stringify({
+            status: 200,
+            error: null,
+            response: results,
+            filesUsedByPgm: entities,
+            entPrograms: entPrograms,
+          })
+        );
+      });
+    });
+  });
+});
+
+app.get('/', async (req, res) => {
+  res.send(
+    JSON.stringify({
+      status: 200,
+      error: null,
+      response: 'Hello from the server!!',
+    })
+  );
 });
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -704,6 +749,21 @@ app.get("/SourceBrowser/:pgmId/:shortnm", async function(req, res) {
 });
 });
 
+app.get("/SourceBrowser/:shortnm", async function(req, res) {
+  var shortnm = req.params.shortnm;
+  let responseForUI = {};
+  console.log('Source browser query executions!');
+  let sql1= `SELECT * , FORMAT(LINENUM,2) as LINENUM FROM Pgmcode WHERE trim(mvardb) = '${shortnm}' or trim(mvar) = '${shortnm}' order by pgmid`;
+     console.log(`SELECT *, FORMAT(LINENUM,2) as LINENUM FROM Pgmcode WHERE trim(mvardb) = '${shortnm}'`)
+     let query1 = await conn.query(sql1, async (err1, results1)=>{
+       if(err1) throw err1;
+       responseForUI.RBrowser = results1;  
+  res.send(JSON.stringify({
+      "Error": false,
+      "result": responseForUI
+  }));
+  });
+});
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import * as d3 from "d3";
 import $ from 'jquery';
-//import CodeEditor from "./CodeEditor";
+import CodeEditor from "./sourceBrowser";
 import Button from "@material-ui/core/Button";
 import CloseIcon from '@material-ui/icons/Close';
 import IconButton from '@material-ui/core/IconButton';
@@ -22,7 +22,7 @@ var codeData = {};
     useEffect(() => {
       if( props.DUDProgramData.DUDProgramData !=="")
         drawDFD();
-    }, [props.DUDProgramData.DUDProgramData]);
+    }, [props.DUDProgramData.DUDProgramData, props.mainWindowState]);
     function handlePgmStructureChart(){
      let progDetails = {
             field: "PGMID",
@@ -142,8 +142,82 @@ if(num ==6){
     }
   }
 var svgHeight = height+ num*500;
-    
-    let svg = d3
+var svg;
+console.log("window state==", props.mainWindowState, props.tgtgrpid)
+/////////trying to reuse component for PGMstructeure
+if (props.mainWindowState=="PGMSC_DU"){
+  // console.log("in if line 149",props.tgtgrpid, document.getElementById(`${props.tgtgrpid}`));
+  // console.log("in if", document.getElementById("grpmain"));
+  //console.log("xxx==", tgtgrpid, d3.select(`#${tgtgrpid}`).attr('transform'))
+    var grptrans = d3.select(`#${props.tgtgrpid}`).attr('transform');
+    var tempCoords = grptrans.substring(10, grptrans.length - 1);
+      var x = parseFloat(tempCoords.split(',')[0])+ 610.00;
+      var y = parseFloat(tempCoords.split(',')[1]);
+      // console.log(x);
+      // console.log(y);
+
+  
+  console.log("in if", d3.select("foreignObject[id^='rightSvg']"));
+  if (d3.select("foreignObject[id^='rightSvg']")["_groups"][0] !== null)
+  d3.select("foreignObject[id^='rightSvg']").remove();
+  else
+  console.log("not removed")
+   svg = d3
+  .select(`#grpmain`)
+  .append('foreignObject')
+  .attr('id', `rightSvg${props.tgtgrpid}`)
+  .attr('height', svgHeight)
+  .attr('width', width )
+  .attr('x', x)
+  .attr('y', y)
+  .attr('style', 'background-color:white;border:1px black solid')
+  .append('svg')
+  .attr('id','check')
+  .attr('width', width)
+  .attr('height', svgHeight)
+  .append("g")
+   .attr("id", "main1")
+ 
+ .attr("transform", " scale(4)");
+  /////////trying to add button
+ 
+   let but = svg
+   
+   .append("rect")
+   .attr("x", 25)
+   .attr("y", 0)
+   .attr("width", 20)
+   .attr("height",20)
+   .attr("fill","white")
+   .attr("stroke-width", 1)
+   .attr("stroke", "black")
+   
+
+
+var tex = svg.append("text")
+// .attr("text-anchor", "middle")
+// .attr("alignment-baseline", "middle")
+// .attr("fill", function (d) {
+//   return "black";
+// })
+.attr("x", 30)
+.attr("y", 15)
+.style("font-size", "20px")
+.text(function(d){ return "x"})
+.on('click',function(d){
+   handleCloseClick();
+});
+//.attr("transform", "translate(" + 550 + "," + 550 + ")  ")
+
+
+}
+
+
+
+////////ending here
+    else {
+      console.log("in else");
+     svg = d3
       .select("#dudcontainerTree")
       .append("svg")
       .attr("id", "dudsvg")
@@ -154,7 +228,8 @@ var svgHeight = height+ num*500;
       //.attr("height", 500)
       .attr("height",  svgHeight + margin.top + margin.bottom)
       //.attr("height",height)
-
+    }
+    let gp =svg
       .append("g")
       .attr("id", "dudgrpmain")
       // .attr("transform", "translate(190, " + margin.top + ")"); changing hit n trial
@@ -172,7 +247,7 @@ var svgHeight = height+ num*500;
     //root.children.map((x, idx) => (idx === 0 || idx === 1 ? collapse(x) : ""));
 
     update(root);
-
+    
     // Collapse the node and all it's children
     function collapse(d) {
       if (d.children) {
@@ -234,10 +309,13 @@ var svgHeight = height+ num*500;
       }
       if(numRed <= 7){
         mainIndex = numRed+1
+        if(mainIndex == num){
+          mainIndex = mainIndex-1
+        }
       }
       if(numRed == 0){
         if(num <=14){
-          mainIndex = num / 2;
+          mainIndex = parseInt(num / 2);
         }
         else{
           mainIndex = 7;
@@ -251,14 +329,21 @@ var svgHeight = height+ num*500;
       nodes.forEach(function (d) {
         //console.log('shilpi_DU data', d)
       if ((d.data.TEXT === d.data.ID) & (d.data.ID==='Entity')) {
-          //d.y = d.depth * 50; //hit and trial change
+        if (props.mainWindowState === "PGMSC_DU")  
+        d.y = d.depth * 50; //hit and trial change
+        else
           d.y = d.depth * 250;
         }
       else if((d.data.TEXT === d.data.ID) & (d.data.ID==='Schema'))
-            //d.y = d.depth * 300 +100;
-            d.y = d.depth *250 + 500 //hit and trial change
+      if (props.mainWindowState === "PGMSC_DU")  
+            d.y = d.depth *50 + 500 //hit and trial change
+            else
+            d.y = d.depth *250 + 500
       else if((d.data.TEXT === d.data.ID) & (d.data.ID==='CODE'))
-            d.y = d.depth * 250 + 750; //hit and trial change
+           if (props.mainWindowState === "PGMSC_DU") 
+            d.y = d.depth * 50 + 750; //hit and trial change
+            else
+            d.y = d.depth * 250 + 750;
       else
           d.y = d.depth * 75
         //d.y = d.depth*150;
@@ -281,14 +366,11 @@ var svgHeight = height+ num*500;
         .attr("class", "node")
         // .attr("transform", function (d, x) {
         //   if (d.data.TEXT === d.data.ID) {
-        //     //console.log("transform===", source.y0 + 100, source.x0 - 50, x);
         //     return (
-        //      // "translate(" + source.y0 + 100 + "," + (source.x0 - 50) + ")"
-        //      //"translate(" + source.y0 + 100 + "," + (source.x0 ) + ")" //shilpi
-        //      //"translate(" + source.y0  + "," + (source.x0 ) + ")"
-        //     null
-        //     );
-        //   }
+        //     "translate(" + source.y0 +100 + "," + (source.x0 ) + ")"
+            
+        //     )
+        //   } });
 
           //return "translate(" + source.y0 + 100 + "," + source.x0+  ")";
          // return "translate(" + (source.x0 - 150) + "," + (source.y0 - 300) + ")";})
@@ -355,7 +437,7 @@ var svgHeight = height+ num*500;
             //SA_CHANGE
           else if(d.data.TEXT === d.data.ID && (d.data.ID=='Schema' || d.data.ID=='CODE'))
              return 250
-          else return 200;
+          else return 0;
           //return 150;
         })
         .attr("height", function (d, index) {
@@ -363,8 +445,8 @@ var svgHeight = height+ num*500;
           return chldHeight; //just half 150-->75
           else if(d.data.TEXT === d.data.ID && (d.data.ID=='Schema' || d.data.ID=='CODE'))
            return 150
-          else return svgHeight; // hit and trial
-
+          //else return svgHeight; // hit and trial
+          else return 0;
 
           
         })
@@ -393,9 +475,9 @@ var svgHeight = height+ num*500;
           //handleMouseOver({ codedata: d.data.CODEDATA, entity: d.data.HEADID });
           handleMouseOver(d);
         })
-        .on("wheel", function(){
+        /*.on("wheel", function(){
           handleScrolling();
-        })
+        })*/
         .append("xhtml:body")
         .attr("style", "margin: 1px ")
         /////making heading
@@ -580,6 +662,7 @@ var svgHeight = height+ num*500;
           return e.ID + ": " + e.TEXT ;
         });
 
+        if (props.mainWindowState==="PGMSCHART") {
         //Shilpi List Changes start
         var nodeFo2 = svg.selectAll('#table1').append("tbody");
       nodeFo2
@@ -604,6 +687,7 @@ var svgHeight = height+ num*500;
          
            props
            .setDataUsageProgram(progDetails);
+           props.setSourceBrowser({field:"", value:"", text:"", shortnm:""});
           //props.pgmLinksHandler("pgmDataUsage", progDetails);
           
         })
@@ -694,6 +778,7 @@ var svgHeight = height+ num*500;
         .text(function (d) {
           return d.PGMID + ": " + d.PGMTX;
         });
+      }//////if ends 
 
         //console.log("table status===", d3.select('#table1'));
        
@@ -806,7 +891,8 @@ var svgHeight = height+ num*500;
 
       }
       function foClick1(node) {
-        console.log('clicked node',node)
+        console.log('clicked node',node);
+        props.setSourceBrowser({field:"", value:"", text:"", shortnm:""});
         //node.data.children[0].HEADTEXT = node.HEADTEXT;
         //node.data.childer[0].HEADTEXT = node.HEADTEXT;
         click(node)
@@ -823,9 +909,9 @@ var svgHeight = height+ num*500;
         SELENTITY.data.children[0].DATA = PGMCODE;
         SELENTITY.data.children[0].HEADTEXT = node.TEXT;
         SELENTITY.data.children[0].HEADID = node.ID;
-        console.log("inside foclick click===", SELENTITY);
-        //window.scrollBy(750,0)
-        click(SELENTITY);
+        console.log("inside foclick click===", node);
+        props.setSourceBrowser({field:"PGMID", value:props.DUDProgramData.program.value, text:"", shortnm:node.ID});
+        //click(SELENTITY);
       }
 
       function handleMouseOver(selEntity) {
@@ -968,7 +1054,7 @@ var svgHeight = height+ num*500;
       }
 
       function drawLine(s, d, addscroll) {
-        
+        console.log('mainIndex line',mainIndex)
         if(s.depth ==1){
           let path;
           var x1 = s.x+addscroll+15;
@@ -979,6 +1065,10 @@ var svgHeight = height+ num*500;
           if(s.id == 2){
              // path = `M ${y1} ${x1} L ${y2} ${x2} L ${y2} ${x3+addscroll+15} M ${y2} ${x2} L ${y2-50} ${x2}`
              path = `M ${y1} ${x1} L ${y2} ${x2} L ${y2} ${x3+addscroll+15}`
+             if(mainIndex == 1){
+               console.log('in check');
+              path =`M ${y1} ${x1} L ${y2} ${x2} L ${y2} ${x3+addscroll+15} M ${y2} ${x2} L ${y2-50} ${x2}`
+             }
           }
           else if(s.id == mainIndex+1){
             path = `M ${y1} ${x1} L ${y2} ${x2} L ${y2} ${x3+addscroll+15} M ${y2} ${x2} L ${y2-50} ${x2}`
@@ -1035,36 +1125,21 @@ var svgHeight = height+ num*500;
    function handleDUDClose(){
     props.setMainWindowState("PGMSCHART");
    }
+   function handleCloseClick()
+    {
+        console.log("clicking close", d3.select("foreignObject[id^='rightSvg']"));
+        d3.select("foreignObject[id^='rightSvg']").remove();
+        
+    }
+
 
 
   //console.log("FTXT===", FTXT);
-  return props.DUDProgramData.DUDProgramData==""?null: (
+  return props.DUDProgramData.DUDProgramData==""?null: props.mainWindowState==="PGMSC_DU" ? "hello" : (
     <div
-      id="dudmaincontainer">
-        {/*
-      <div className={classes.caption}>
-      {props.screenId !=="dataUsage"?(
-       <div>
-        <IconButton 
-        aria-label="close" 
-        align="left"
-        className={classes.closeButton1} 
-        onClick={handleDUDClose}
-      >
-        <CloseIcon />
-      </IconButton></div>):""}
-        <span className={classes.span} style={{padding:"10px 20px 20px 45px"}}>
-         
-  
-        </span>
-      </div>*/}
+      id="dudmaincontainer" style={{position:"relative"}}> 
+      <div id="dudcontainerTree"> </div>
       
-      
-      <div
-        id="dudcontainerTree">
-      
-        {/*drawDFD()*/}
-      </div>
       <div  id="highlightPgm"
         style={{
           width: "190px",
@@ -1095,7 +1170,7 @@ var svgHeight = height+ num*500;
             </div>
         </div>
 
-      
+      <CodeEditor {...props} />
       
     </div>)
   

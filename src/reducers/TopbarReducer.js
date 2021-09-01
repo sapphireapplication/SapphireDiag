@@ -58,6 +58,7 @@ const INITIAL_STATE = {
     content:
       "Contact for Assistance\n\nIf you have any questions or concerns, please do not hesitate to contact us.\n\nVersion : LIC\nBuild     : 20180508",
   },
+  authDetails:JSON.parse(localStorage.getItem('authDetails'))
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -88,6 +89,11 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         accountInfo: action.payload,
       };
+      case "SET_TOPBAR_AUTH_DETAILS":
+        return{
+          ...state,
+          authDetails: action.payload,
+        }
     default:
       return state;
   }

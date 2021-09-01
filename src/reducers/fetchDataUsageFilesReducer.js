@@ -1,5 +1,6 @@
 const INITIAL_STATE = {
   dataUsageFileList: [],
+  entrels:[],
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -10,6 +11,7 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         dataUsageFileList: action.payload,
+        entrels: action.entrels
       };
     default:
       return state;

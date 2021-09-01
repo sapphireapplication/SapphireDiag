@@ -30,6 +30,7 @@ import fetchPgmPgmFilesReducer from "./fetchPgmPgmFilesReducer";
 import fetchPgmStrChartReducer from "./fetchPgmStrChartReducer";
 import fetchDMDModelReducer from "./fetchDMDModelReducer";
 import fetchSourceBrowserReducer from "./DataUSageDiagram/fetchSourceBrowserReducer";
+import fetchSBDataReducer from "./DataUSageDiagram/fetchSBDataReducer";
 import fetchDiagramTypeReducer from "./fetchDiagramTypeReducer";
 import fetchDataUsageProgramsReducer from "./fetchDataUsageProgramsReducer";
 import fetchDataUsageFilesReducer from "./fetchDataUsageFilesReducer";
@@ -69,5 +70,6 @@ export default combineReducers({
   fetchDiagramTypeReducer,
   fetchDataUsageProgramsReducer,
   fetchDataUsageFilesReducer,
-  fetchMainWindowStateReducer
+  fetchMainWindowStateReducer,
+  fetchSBDataReducer,
 });

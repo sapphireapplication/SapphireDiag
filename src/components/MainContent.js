@@ -10,14 +10,14 @@ import MenuIcon from "@material-ui/icons/Menu";
 import BreadCrumb from "./BreadCrumb";
 import clsx from "clsx";
 import DFDRenderer from "./DFDRenderer";
-
-function Maincontent(props) {
-  const { classes } = props;
-  console.log("in main content==", props);
+const Maincontent = ({ handleDrawerOpen, open , classes, children }) => {
+//function Maincontent(props,children) {
+ // const { classes } = props;
+  //console.log("in main content==", props);
   
   /* Rendering main component */
   return (
-    <div id="mainContent" className={classes.mainContent}>
+   <div id="mainContent" className={classes.mainContent}>
       <main
         className={clsx(classes.content, {
           [classes.contentShift]: true,
@@ -38,7 +38,8 @@ function Maincontent(props) {
             <Paper elevation={5} className={classes.mainContentPaper}>
               <Grid container spacing={0}>
                 {/*<FramesRenderer {...props} />*/}
-                <DFDRenderer {...props} />
+                {/*<DFDRenderer {...props} />*/}
+                {children}
 
               </Grid>
             </Paper>

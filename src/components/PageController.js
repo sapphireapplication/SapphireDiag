@@ -19,20 +19,21 @@ import { setEntityData } from "../actions/EntityDataActions";
 const mapStateToProps = (state) => {
   return {
     //Programstructiure chart
-    PgmStrData: state.fetchPgmStrChartReducer,
-    programList: state.fetchProgramsReducer.programList,
+    //pgmrightrels: state.fetchProgramsReducer.pgmrightrels,
+    //PgmStrData: state.fetchPgmStrChartReducer,
+    //programList: state.fetchProgramsReducer.programList,
     //Data usage Program
-    dataUsageProgramList: state.fetchDataUsageProgramsReducer.dataUsageProgramList,
-    dataUsageFileList: state.fetchDataUsageFilesReducer.dataUsageFileList,
+    //dataUsageProgramList: state.fetchDataUsageProgramsReducer.dataUsageProgramList,
+   
     diagramType: state.fetchDiagramTypeReducer.diagType,
     
-    DUDProgramData: state.fetchDUDProgramReducer,
-    DUDFileData: state.fetchDUDFileReducer,
+    //DUDProgramData: state.fetchDUDProgramReducer,
+    
     //DMD
-    entityList: state.fetchentitiesReducer.entityList,
-    entRelsDMD: state.fetchentitiesReducer.entRelsDMD,
-    DMDModelData: state.fetchDMDModelReducer,
-    sourceBrowserData : state.fetchSourceBrowserReducer,
+    //entityList: state.fetchentitiesReducer.entityList,
+    //entRelsDMD: state.fetchentitiesReducer.entRelsDMD,
+    //DMDModelData: state.fetchDMDModelReducer,
+    //sourceBrowserData : state.fetchSourceBrowserReducer,
     mainWindowState : state.fetchMainWindowStateReducer.mainWindowState,
 
   };
@@ -40,14 +41,21 @@ const mapStateToProps = (state) => {
 
 function PageController(props) {
   /* To fill in the params to form req/resp accordingly */
- 
+    console.log('in pagecontroller')
   const [load, setLoad] = useState("0");
   //const [sideTab, setsideTab] = React.useState("Entities");
-
+   
   /* Invoke startup action to read initial page response from server */
-  useEffect(() => {
-    console.log("hello i rendered", load, props)
-  });
+  
+  /*useEffect(() => {
+    console.log('useeffect click')
+    if(window.location.href == 'http://localhost:8080/dudfile')
+
+  linkClickHandler('DATAUSAGEFILE',{field:"",
+   value:"",
+   text:"",
+   });
+  });*/
 
   /* Link click event handler to simulate page navigation */
 
@@ -104,44 +112,14 @@ function PageController(props) {
            }
              ) )));
            
-            /*props.setDMDChart(param2)
-            
-            .then((json)=>
-            props.setMainWindowState(id)
-            .then((json)=>
-            setLoad(id)
-            )))))*/
-            /*props.setMainWindowState(id)
-                  .then (json=>
-            {
-              console.log('now calling')
-                 props
-                  .setDMDChart(param2)
-                  .then((json)=>
-                  
-                  //setLoad(id)
-                  console.log('hi')
-                  )   
            
-             } ) )));*/
            
       break;
       
       case "DATAUSAGE":  //Data Usage Program
      
+      setLoad(id)
       
-      props.setDiagramType("DATA_USAGE_PGM")
-    
-        .then((json) =>
-        
-          props.setDataUsageProgramList()
-          .then((json)=>
-              props.setDataUsageProgram({value:"default", text:""})
-                 .then((json) =>
-                 props.setMainWindowState("DATAUSAGE")
-        .then (json=>
-                 setLoad(id)
-        )) ));
           break;
 
       case "DATAUSAGEFILE":   //Data Usage File
@@ -149,7 +127,7 @@ function PageController(props) {
         
       .then((json) =>
       
-        props.setDataUsageFileList()
+       /* props.setDataUsageFileList()
         .then((json)=>
             props.setDataUsageFile({value:"default", text:""},props)
                .then((json) =>
@@ -161,21 +139,12 @@ function PageController(props) {
                props.setMainWindowState("DATAUSAGEFILE")
                  .then (json=>
                    setLoad(id)
-      )) )));
-     
-         /* props.setDiagramType("DATA_USAGE_FILE")
+      )) )));*/
+
+      props.setMainWindowState("DATAUSAGEFILE")
+                 .then (json=>
+                   setLoad(id)))
         
-            .then((json) =>
-            
-              props.setDataUsageFileList()
-              .then((json)=>
-                  props.setDataUsageFile({value:"default", text:""})
-                     .then((json) =>
-                     props.setMainWindowState("DATAUSAGEFILE")
-            .then (json=>
-                     setLoad(id)
-            )) ));
-*/             
             break;
 
       case "PGMSC_DU":  //Data Usage
@@ -238,14 +207,14 @@ function PageController(props) {
 
 //export default connect(mapStateToProps, mapDispatchToProps)(PageController);
 export default connect(mapStateToProps, {
-   setProgramData,
-  setProgramStructureChart,
-  setDataUsageProgramList,
-  setDataUsageProgram,
-  setDataUsageFileList,
-  setDataUsageFile,
+  // setProgramData,
+  //setProgramStructureChart,
+  //setDataUsageProgramList,
+  //setDataUsageProgram,
+  //setDataUsageFileList,
+  //setDataUsageFile,
   setDiagramType,
-  setSourceBrowser,
+ // setSourceBrowser,
   setMainWindowState,
   setEntityData,
   setDMDChart,

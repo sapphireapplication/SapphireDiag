@@ -15,7 +15,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname ,"dist"),
     filename: "[name].bundle.js",
-    publicPath: '/'
+    publicPath: '/',
   },
   module: {
     rules: [
@@ -28,13 +28,19 @@ module.exports = {
       },
       { test: /\.css$/, loader: 'style-loader!css-loader' },
       {
-        test: /\.(png|svg|jpg|gif)$/,
-        use: [
-          'file-loader',
-        ],
+      test: /\.(png|svg|jpg|gif|xml)$/,
+      loader: 'file-loader',
+      options: {
+        name: '[name].[ext]',
       },
+    },
     ]
   },
+  devServer: {
+    historyApiFallback: true,
+       
+  },
+  
   plugins: [
     htmlWebpackPlugin
   ]

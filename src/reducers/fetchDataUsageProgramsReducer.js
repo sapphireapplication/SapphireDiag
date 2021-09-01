@@ -1,5 +1,6 @@
 const INITIAL_STATE = {
   dataUsageProgramList: [],
+  pgmrels: [],
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -10,6 +11,8 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         dataUsageProgramList: action.payload,
+        pgmrels: action.pgmrels,
+        japtxt: action.japtxt
       };
     default:
       return state;

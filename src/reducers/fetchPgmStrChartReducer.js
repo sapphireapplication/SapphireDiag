@@ -18,7 +18,25 @@ export default (state = INITIAL_STATE, action) => {
   }
   switch (action.type) {
     case "SET_STR_DIAGRAM_DATA":
-      
+      if(action.payload == ""){
+        return{
+          ...state,
+          diagData: [],
+  annotated: false,
+  schemaBoxes: [],
+  fileList: {},
+  program: '',
+  entities: [],
+      /*    diagData: "",
+          
+        schemaBoxes: [...state.schemaBoxes, ...action.schemaBoxes],
+        fileList: { ...state.fileList, ...action.fileList },
+        entities: action.entPrograms,
+        annotated: true,
+        program:action.program*/
+        }
+      }
+      else{
       return {
         ...state,
           diagData: setDiagramData(
@@ -36,7 +54,7 @@ export default (state = INITIAL_STATE, action) => {
         annotated: true,
         program:action.program
         
-      };
+      };}
     default:
       return state;
   }

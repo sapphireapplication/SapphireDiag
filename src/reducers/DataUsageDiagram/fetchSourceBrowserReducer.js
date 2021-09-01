@@ -11,7 +11,7 @@ const INITIAL_STATE = {
   export default (state = INITIAL_STATE, action) => {
     switch (action.type) {
       case "FETCH_SOURCEBROWSER":
-        console.log("action in reducer===", action);
+        console.log("action in SB reducer===", action);
         return {
           ...state,
           pgmCodeData: action.payload,

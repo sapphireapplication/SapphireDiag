@@ -1,6 +1,7 @@
 const INITIAL_STATE = {
   programList: [],
   chartArray:[],
+  pgmrightrels: [],
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -12,6 +13,7 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         programList: action.payload,
         chartArray: action.chartArray,
+        pgmrightrels: action.chartArray2,
       };
     default:
       return state;

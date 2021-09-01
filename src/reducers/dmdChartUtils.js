@@ -4,12 +4,19 @@ export const setDMDDiagramData = (
     type,
     zoomLevel,
     ent,
-    DMDEntities
+    DMDEntities,
+    DMDEntjrules,
+    nodePosition,
+    drawPlistTable
   ) => {
     const diag = {
       data: {
         links: data.links,
         nodes: data.nodes,
+        pList: data.pList,
+        relation: data.relation,
+        nodePosition,
+        drawPlistTable
       },
       type,
       name: ent,
@@ -20,7 +27,8 @@ export const setDMDDiagramData = (
         loaded: true,
         maxLevel: 1,
       },
-      DMDEntities
+      DMDEntities,
+      DMDEntjrules
     };
   
     /*if (diagData.length > 0) {
@@ -34,6 +42,7 @@ export const setDMDDiagramData = (
       return newDiag;
     }*/
     //console.log('shilpi_dmd diag im dmdchartutils',diag)
+    console.log('diag',diag);
     diagData[0] = diag;
     return diagData;
     //return [...diagData, diag];

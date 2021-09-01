@@ -1,9 +1,15 @@
 import React from "react";
+import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import PageController from "./PageController";
 import { MuiThemeProvider, withStyles } from "@material-ui/core/styles";
 import { theme } from "../theme/theme";
 import styles from "../styles/site.js";
 import { withCookies } from "react-cookie";
+import TopBar from "./TopBar";
+
+import DataUsageDiagramFile from "./DataUsageDiagram/DataUsageDiagramFile";
+import PageRenderer from "./PageRenderer";
+
 
 function App(props) {
   const { cookies } = props;
@@ -21,10 +27,16 @@ function App(props) {
   // })
 
   return (
-    <MuiThemeProvider theme={theme}>
-      <PageController {...props} />
-    </MuiThemeProvider>
+    
+      
+      
+          <MuiThemeProvider theme={theme}>        
+      <PageRenderer  {...props} />
+      </MuiThemeProvider>
+
   );
+ 
+
 }
 
 export default withCookies(withStyles(styles, { withTheme: true })(App));

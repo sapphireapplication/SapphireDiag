@@ -30,9 +30,13 @@ const useStyles = makeStyles({
  function CodeEditor(props) {
   const { classes } = props;
   console.log("inside codeEditor ===", props);
+
   const [selectedDSE, setselDSE] = React.useState(0);
   const [ExpData, setExpData] = React.useState({slctd:0, whereusedData:[]});
   const [highlightIndex, setHighlightIndex] = React.useState(-1);
+
+
+  
   var DSEstyle = selectedDSE === 0 ? {display:"none"}: {display:"block"};
   var Expstyle = ExpData.slctd===0 ? {display:"none"}: {display:"block"};
   function refreshSourceBrowser()  {

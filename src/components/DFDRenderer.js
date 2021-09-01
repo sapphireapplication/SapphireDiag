@@ -9,25 +9,60 @@ import PgmStruChart from "./PgmStruChart/PgmStruChart";
 import DMDChart from "./DMDChart";
 import PgmStructureRenderer from "./PgmStructureRenderer";
 import DUDRenderer from "./DUDRenderer";
+import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
+
+
+
 
 
 function DFDRenderer(props) {
-  console.log("inside frame ===", props);
-  // return props.screenId === "PGMSCHART" ? (
-  //   <PgmStruChart {...props} />
-  // ) : props.screenId === "dataModelDiag" ? (
-  //   <DMDChart {...props} />
-  // ) : props.mainWindowState === "DATAUSAGE"?<DUDRenderer {...props} /> : props.screenId === "PGMSC_DU" ?
-  // <div><PgmStruChart {...props} /><DataUsageDiagram {...props}/></div> :null 
+  console.log('isme aaya dfd')
+  return(
+<Router>
+      <Switch>
+          <Route path="/dudfile"
+        exact 
+        component={()=>(
+       
+      <DataUsageDiagramFile  {...props}  />
+   
+        )}>
+              
+        </Route>
+    
+        <Route path="/" 
+        exact 
+        component={()=>(
+        null
+        )}>
+              
+        </Route>
+        </Switch>
 
-  return props.mainWindowState === 'PGMSCHART' ||
+       
+    </Router>
+  )
+  
+
+}
+
+export default connect(null, null)(DFDRenderer);
+
+
+
+/*return(
+ 
+    
+   props.mainWindowState === 'PGMSCHART' ||
     props.mainWindowState === 'PGMSC_DU' ||
     props.mainWindowState === 'PGMSC_DU_FILE' ? (
     <PgmStruChart {...props} />
   ) : props.mainWindowState === "DMD" ? (
     <DMDChart {...props} />
   ) : props.mainWindowState === "DATAUSAGEFILE" ? (
-    <DataUsageDiagramFile {...props} />
+    <DataUsageDiagramFile {...props}  />
+
+   
   ) :props.mainWindowState === "DATAUSAGE"?<DUDRenderer {...props} /> : props.mainWindowState === "PGMSC_DU" ?
   <div style={{ width:"100vw", position:"relative"}}>
   <div id="panel1" 
@@ -35,7 +70,5 @@ function DFDRenderer(props) {
   ><PgmStruChart {...props} /></div>
   </div> :null 
   
-}
-
-export default connect(null, null)(DFDRenderer);
-//<DataUsageDiagramOverlay {...props}/>
+  
+  )*/

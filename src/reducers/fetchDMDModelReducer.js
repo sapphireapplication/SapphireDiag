@@ -22,7 +22,10 @@ export default (state = INITIAL_STATE, action) => {
           "DMD_CHART",
           1,  //zoomlevel
           action.ent,
-          action.DMDEntities
+          action.DMDEntities,
+          action.DMDEntjrules,
+          action.nodePosition,
+          action.drawPlistTable,
         ),
         entity:action.entity
       };

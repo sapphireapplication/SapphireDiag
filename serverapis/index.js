@@ -14,7 +14,8 @@ const conn = mysql.createConnection({
   //password: "Mysql@123", //for pipeline server machine
   password: "mysql123", //for local shilpi machine
   //database: "cdemd014",
- // database: "custd008",
+  
+  //database: "custd008",
   database:"mvxd008",
  //database: "custd008",
 //insecureAuth : 'true',
@@ -95,7 +96,7 @@ app.get('/entsch/:entids', (req, res ) => {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-app.get('/PgmDefs', async (req, res) => {
+app.get('/PgmDefs/', async (req, res) => {
   console.log('inside pgmdefs');
   var programs = [];
   var chartArray = [];
@@ -299,15 +300,17 @@ app.get("/DataUsageDiagram/Program/:pgmid", async (req, res) => {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-app.get("/DataUsageDiagram/File/:entid", async (req, res) => {
+app.get("/DataUsageDiagram/File/:dbname/:entid", async (req, res) => {
   console.log("inside pgmschemaschema", [req.params.entid]);
   var entid = [req.params.entid];
+  var dbname = [req.params.dbname];
   var programs = [];
   var pgmschema = [];
   var pgmcode = [];
   var entschema = [];
+  
 
-  let sql = `SELECT  A.*, B.PGMTX FROM  PGMFILES AS A LEFT JOIN PGMDEFS AS B ON trim(A.PGMID)=trim(B.PGMID) WHERE TRIM(A.ENTID)='${entid}' order by WHFUSG DESC `;
+  let sql = `SELECT  A.*, B.PGMTX FROM  ${dbname}.PGMFILES AS A LEFT JOIN PGMDEFS AS B ON trim(A.PGMID)=trim(B.PGMID) WHERE TRIM(A.ENTID)='${entid}' order by WHFUSG DESC `;
   let query = await conn.query(sql, async (err, results) => {
     if (err) throw err;
     //console.log("RESULTS in DFD==", results);
@@ -323,20 +326,20 @@ app.get("/DataUsageDiagram/File/:entid", async (req, res) => {
     });
     console.log("arrpgm==", arrpgm);
 
-    let sql1 = `SELECT trim(PGMID) AS PGMID, trim(SHORTNM) AS ID, trim(FTXT) as TEXT  FROM PGMSCMDB AS A WHERE trim(A.PGMID) in (${arrpgm}) AND TRIM(A.ENTID)='${entid}'`;
+    let sql1 = `SELECT trim(PGMID) AS PGMID, trim(SHORTNM) AS ID, trim(FTXT) as TEXT  FROM ${dbname}.PGMSCMDB AS A WHERE trim(A.PGMID) in (${arrpgm}) AND TRIM(A.ENTID)='${entid}'`;
     console.log("sql1===", sql1);
     let query1 = await conn.query(sql1, async (err1, results1) => {
       if (err1) throw err1;
       console.log("RESULTS in DFD==", results1);
       pgmschema = results1;
 
-      let sql2 = `SELECT trim(PGMID) as PGMID, format(LINENUM,2) as ID, STN as TEXT, FILENM as FILENM, MVAR as MVARDB, SVAR1 as SVAR1, SVAR2 as SVAR2, SVAR3 as SVAR3, SVAR4 as SVAR4 FROM PGMCODE AS A WHERE A.PGMID in (${arrpgm}) AND A.FILENM='${entid}'`;
+      let sql2 = `SELECT trim(PGMID) as PGMID, format(LINENUM,2) as ID, STN as TEXT, FILENM as FILENM, MVAR as MVARDB, SVAR1 as SVAR1, SVAR2 as SVAR2, SVAR3 as SVAR3, SVAR4 as SVAR4 FROM ${dbname}.PGMCODE AS A WHERE A.PGMID in (${arrpgm}) AND A.FILENM='${entid}'`;
       console.log("sql2===", sql2);
       let query2 = await conn.query(sql2, async(err2, results2) => {
         if (err2) throw err2;
         //console.log("RESULTS in DFD==", results1);
         pgmcode = results2;
-        let sql3 = `SELECT trim(ENTID) AS PGMID, trim(SHORTNM) AS ID, trim(FTXT) as TEXT  FROM ENTSCHEMA AS A WHERE TRIM(A.ENTID)='${entid}'`;
+        let sql3 = `SELECT trim(ENTID) AS PGMID, trim(SHORTNM) AS ID, trim(FTXT) as TEXT  FROM ${dbname}.ENTSCHEMA AS A WHERE TRIM(A.ENTID)='${entid}'`;
         console.log("sql3===", sql3);
         let query3 = await conn.query(sql3, async(err3, results3) => {
           if (err3) throw err3;

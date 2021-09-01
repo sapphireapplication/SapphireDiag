@@ -5,7 +5,7 @@ export const setEntityData = () => async (dispatch) => {
   let entities = []
   let entrels = []
 
-  let qurl = `${API_ADDRESS}/Entities`;
+  let qurl = `${SERVERADDR}/Entities/${DBNAME}`;
   console.log("QURL===", qurl);
   await fetch(qurl)
     .then((res) => res.json())

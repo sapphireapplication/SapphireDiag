@@ -30,4 +30,13 @@ export const setTopbarData = () => async (dispatch) => {
   dispatch({
     type: "DFD_DATA",
   });
+  
 };
+
+export const  setAuthDetails=(authDetails)=>async (dispatch)=>{
+  dispatch({
+    
+    type: 'SET_TOPBAR_AUTH_DETAILS',
+    payload: authDetails,
+  })
+}

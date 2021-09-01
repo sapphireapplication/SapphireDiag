@@ -9,15 +9,30 @@ export const setProgramStructureChart = (param) => async (dispatch, getState) =>
   let schema = [];
   let files = {};
   let entities = [];
+  let schemaDetails = {};
   var pgmid = param.value;
   //TEXT: program.text
+  if(pgmid == 'default'){
+    dispatch({
+      type: 'SET_STR_DIAGRAM_DATA',
+      payload: "", //contains data after calling getPgmStructureChartData
+      schemaBoxes: "",
+      fileList: "",
+      entPrograms: "",
+      diagId: 1,
+      pgm: pgmid,
+      program: param,
+    });
+  }
+  else{
   getPgmStructureChartData(pgmid, state.fetchProgramsReducer.chartArray).then(
     (data) => {
       const payload = data.data;
       //console.log('after calling elimination payload ',payload)
       const pgmListParm = getPgms(payload);
       //console.log('pgmListParm',pgmListParm)
-      qurl = `${API_ADDRESS}/PgmDiagSchemas/${pgmListParm}`;
+      qurl = `${SERVERADDR}/PgmDiagSchemas/${DBNAME}/${pgmListParm}`;
+      console.log('qurl2',qurl)
       fetch(qurl)
         .then((res) => res.json())
         .then(async (json) => {
@@ -39,6 +54,7 @@ export const setProgramStructureChart = (param) => async (dispatch, getState) =>
         });
     }
   );
+  }
 };
 
 export const getPgms = (pgmList) => {

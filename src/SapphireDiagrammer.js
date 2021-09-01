@@ -6,13 +6,16 @@ import { createStore, applyMiddleware } from 'redux';
 import reducers from './reducers';
 import thunk from 'redux-thunk';
 import App from './components/App';
+import {  BrowserRouter ,Route, Link } from "react-router-dom";
 
 const store = createStore(reducers, applyMiddleware(thunk))
 const Index = () => {
   return  (
     <CookiesProvider>
       <Provider store={store}>
+      {/*<BrowserRouter>*/}
         <App/>
+        {/*</BrowserRouter>*/}
       </Provider>
     </CookiesProvider>
   )

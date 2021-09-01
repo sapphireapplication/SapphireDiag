@@ -7,7 +7,7 @@ export const setPgmSchemaData = (param) => async (dispatch) => {
   let qurl = "";
   let response = [];
 
-  if (entity === undefined) qurl = `${API_ADDRESS}/PgmSchema/${program.value}`;
+  if (entity === undefined) qurl = `${API_ADDRESS}/PgmSchema/${DBNAME}/${program.value}`;
   else qurl = `${API_ADDRESS}/PgmSchema/2/${program.value}/${entity.value}`;
 
   console.log("qurl==", qurl);

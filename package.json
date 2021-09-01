@@ -1,11 +1,11 @@
 {
- "homepage": "http://shilpi386.github.io/SapphireNew",
+  "homepage": "http://shilpi386.github.io/SapphireNew",
   "name": "md-license-testapp",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
+    "deploy": "gh-pages -d dist",
     "test": "jest",
     "test:watch": "npm test -- --watch",
     "start": "webpack-dev-server --mode development --open  ",

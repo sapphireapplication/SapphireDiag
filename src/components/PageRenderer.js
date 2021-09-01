@@ -182,7 +182,7 @@ function PageRenderer(props) {
           ></Route>
           
           <Route
-            path='/'
+            path='/SapphireNew'
             exact
             component={() => (
               <Maincontent

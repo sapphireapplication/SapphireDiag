@@ -101,7 +101,7 @@ function PageRenderer(props) {
 
         <Switch>
           <Route
-            path='/:dbname/dusgf'
+            path='/SapphireNew/:dbname/dusgf'
             exact
             component={() => (
               <Maincontent
@@ -114,7 +114,7 @@ function PageRenderer(props) {
             )}
           ></Route>
           <Route
-            path='/:dbname/dusgf/:entid'
+            path='/SapphireNew/:dbname/dusgf/:entid'
             exact
             component={() => (
               <Maincontent
@@ -127,7 +127,7 @@ function PageRenderer(props) {
             )}
           ></Route>
           <Route
-            path='/:dbname/dusgp'
+            path='/SapphireNew/:dbname/dusgp'
             exact
             component={() => (
               <Maincontent
@@ -140,7 +140,7 @@ function PageRenderer(props) {
             )}
           ></Route>
           <Route
-            path='/:dbname/dusgp/:pgmid'
+            path='/SapphireNew/:dbname/dusgp/:pgmid'
             exact
             component={() => (
               <Maincontent
@@ -154,7 +154,7 @@ function PageRenderer(props) {
           ></Route>
 
           <Route
-            path='/:dbname/scd'
+            path='/SapphireNew/:dbname/scd'
             exact
             component={() => (
               <Maincontent
@@ -168,7 +168,7 @@ function PageRenderer(props) {
           ></Route>
 
           <Route
-            path='/:dbname/dmd'
+            path='/SapphireNew/:dbname/dmd'
             exact
             component={() => (
               <Maincontent

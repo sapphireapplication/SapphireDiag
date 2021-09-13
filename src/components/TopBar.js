@@ -115,7 +115,7 @@ function Topbar(props) {
 
   useEffect(() => {
     if (initialRender.current) {
-      initialRender.current = false;
+      initialRender.current = true;
     } else {
       var object = {
         scdFlag: flagScd,
@@ -176,7 +176,7 @@ function Topbar(props) {
               
             
             >
-           <Link style={{color :"white", textDecoration:"none"}} to={{pathname:`/${props.authDetails.dbName}/dusgp`}}>PROGRAMS</Link> 
+           <Link style={{color :"white", textDecoration:"none"}} to={{pathname:`/SapphireNew/${props.authDetails.dbName}/dusgp`}}>PROGRAMS</Link> 
         </Button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
        
             <Button 
@@ -187,7 +187,7 @@ function Topbar(props) {
               onClick={handleFileClick}
               
             >
-              <Link style={{color :"white", textDecoration:"none"}} to={{pathname:`/${props.authDetails.dbName}/dusgf`}}>FILES</Link>
+              <Link style={{color :"white", textDecoration:"none"}} to={{pathname:`/SapphireNew/${props.authDetails.dbName}/dusgf`}}>FILES</Link>
              
             {/*<Link style={{color :"white", textDecoration:"none"}} to="/`:${props.authDetails.dbName}`/dusgf">FILES</Link>*/}
             

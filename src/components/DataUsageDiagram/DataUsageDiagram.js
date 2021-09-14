@@ -112,7 +112,7 @@ const [scddata, setSCDData] = useState({
     text: '',
   });
  DBNAME = props.authDetails.dbName;
- SERVERADDR = 'http://'+props.authDetails.ipAddr+':'+props.authDetails.port;
+ SERVERADDR = 'https://'+props.authDetails.ipAddr+':'+props.authDetails.port;
  
   //const [LoadCode, setLoadCode] = useState('0');
   var SELENTITY = { codedata: [], entity: "" };
@@ -487,7 +487,7 @@ const [scddata, setSCDData] = useState({
      num = root.children.length
      totNodes = num;
 if(num ==6){
-     height = 250
+     height = 250   
      sep = 3.75
 
     }
@@ -724,7 +724,7 @@ if(num ==6){
           if (d.data.TEXT === d.data.ID && d.data.ID=='Entity') 
           return chldHeight; //just half 150-->75
           else if(d.data.TEXT === d.data.ID && (d.data.ID=='Schema' || d.data.ID=='CODE' || d.data.ID =='Brule'))
-           return 150
+           return 150    //  change height 150
           
            
           else { 

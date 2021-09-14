@@ -10,7 +10,8 @@ import IconButton from '@material-ui/core/IconButton';
 import ContactSupportIcon from '@material-ui/icons/ContactSupport';
 import DialogRenderer from './DialogRenderer';
 import logo from '../images/logo.png';
-import sapphirelogo from '../images/pngegg.png';
+//import sapphirelogo from '../images/pngegg.png';
+import sapphirelogo from './pngegg.png';
 import Button from '@material-ui/core/Button';
 import LoginScreen from './LoginScreen';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
@@ -54,7 +55,8 @@ function Topbar(props) {
   console.log('shilpi props in topbar', props);
   const removeall = () =>{
     localStorage.clear();
-    window.location.assign(`${window.location.origin}`);
+    console.log('show window origin',`${window.location.origin}`)
+    window.location.assign(`${window.location.origin}/SapphireNew/`);
   };
   const [open, setOpen] = React.useState(false);
   const [dialogTitle, setDialogTitle] = React.useState('');
@@ -71,6 +73,7 @@ function Topbar(props) {
   };
 
   const handleDialogClose = () => {
+
     setOpen(false);
   };
   const handleSCDClick = () => {
@@ -109,13 +112,15 @@ function Topbar(props) {
 
   useEffect(() => {
     /* Fetching session info data received from server on startup */
+   
     console.log('shilpi topbar useeffect', props);
     props.setSessionInfo();
+    
   }, []);
 
   useEffect(() => {
     if (initialRender.current) {
-      initialRender.current = false;
+      initialRender.current =  false  //false;
     } else {
       var object = {
         scdFlag: flagScd,
@@ -176,7 +181,7 @@ function Topbar(props) {
               
             
             >
-           <Link style={{color :"white", textDecoration:"none"}} to={{pathname:`/${props.authDetails.dbName}/dusgp`}}>PROGRAMS</Link> 
+           <Link style={{color :"white", textDecoration:"none"}} to={{pathname:`/SapphireNew/${props.authDetails.dbName}/dusgp`}}>PROGRAMS</Link> 
         </Button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
        
             <Button 
@@ -187,7 +192,7 @@ function Topbar(props) {
               onClick={handleFileClick}
               
             >
-              <Link style={{color :"white", textDecoration:"none"}} to={{pathname:`/${props.authDetails.dbName}/dusgf`}}>FILES</Link>
+              <Link style={{color :"white", textDecoration:"none"}} to={{pathname:`/SapphireNew/${props.authDetails.dbName}/dusgf`}}>FILES</Link>
              
             {/*<Link style={{color :"white", textDecoration:"none"}} to="/`:${props.authDetails.dbName}`/dusgf">FILES</Link>*/}
             

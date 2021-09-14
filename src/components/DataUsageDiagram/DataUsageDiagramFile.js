@@ -68,7 +68,8 @@ const [dmddata, setDMDData] = useState({
   DBNAME = props.authDetails.dbName;
   //IPADDR = props.authDetails.ipAddr;
   //PORT = props.authDetails.port;
-  SERVERADDR = 'http://'+props.authDetails.ipAddr+':'+props.authDetails.port;
+  SERVERADDR = 'https://'+props.authDetails.ipAddr+':'+props.authDetails.port;
+  //SERVERADDR = 'https://'+props.authDetails.ipAddr+'/sapphiressl';
   console.log('serverip',SERVERADDR)
   //console.log('dbname, ipaddr, port',DBNAME,IPADDR,PORT)
   

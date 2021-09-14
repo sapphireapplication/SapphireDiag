@@ -200,9 +200,7 @@ export default function LoginScreen(props) {
                     <MenuItem value='sphmdna18'>
                       SPHMDNA18 : Demo Repository
                     </MenuItem>
-                    <MenuItem value='sphmdna21'>
-                      SPHMDNA21 : Demo Repository
-                    </MenuItem>
+                   
                   </Select>
                 )}
               </FormControl>

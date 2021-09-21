@@ -70,8 +70,8 @@ export const theme = createMuiTheme({
     },
     MuiTypography: {
       body1: {
-        fontSize: "0.9rem",
-        lineHeight: "1",
+        fontSize: '12px',
+        lineHeight: '0',
       },
       h6: {
         //added by seema

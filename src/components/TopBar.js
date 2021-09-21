@@ -10,8 +10,7 @@ import IconButton from '@material-ui/core/IconButton';
 import ContactSupportIcon from '@material-ui/icons/ContactSupport';
 import DialogRenderer from './DialogRenderer';
 import logo from '../images/logo.png';
-//import sapphirelogo from '../images/pngegg.png';
-import sapphirelogo from './pngegg.png';
+import sapphirelogo from '../images/pngegg.png';
 import Button from '@material-ui/core/Button';
 import LoginScreen from './LoginScreen';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
@@ -55,8 +54,7 @@ function Topbar(props) {
   console.log('shilpi props in topbar', props);
   const removeall = () =>{
     localStorage.clear();
-    console.log('show window origin',`${window.location.origin}`)
-    window.location.assign(`${window.location.origin}/SapphireDiag/`);
+    window.location.assign(`${window.location.origin}`);
   };
   const [open, setOpen] = React.useState(false);
   const [dialogTitle, setDialogTitle] = React.useState('');
@@ -73,7 +71,6 @@ function Topbar(props) {
   };
 
   const handleDialogClose = () => {
-
     setOpen(false);
   };
   const handleSCDClick = () => {
@@ -112,15 +109,13 @@ function Topbar(props) {
 
   useEffect(() => {
     /* Fetching session info data received from server on startup */
-   
     console.log('shilpi topbar useeffect', props);
     props.setSessionInfo();
-    
   }, []);
 
   useEffect(() => {
     if (initialRender.current) {
-      initialRender.current =  false  //false;
+      initialRender.current = false;
     } else {
       var object = {
         scdFlag: flagScd,

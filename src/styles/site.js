@@ -88,7 +88,7 @@ const styles = (theme) => ({
     position: "absolute",
     right: theme.spacing(1),
     top: theme.spacing(1),
-    color: theme.palette.grey[500],
+    color: theme.palette.grey[0],
   },
   toolbar: {
     alignItems: "flex-start",
@@ -328,7 +328,9 @@ const styles = (theme) => ({
   borderTop:'1px solid black',
 },
 
-
+  treeViewClass: {
+    fontFamily: 'monospace',
+  },
   
    /////////source browser
   
@@ -411,8 +413,8 @@ ceTab : {
     border:"2px solid black",
     // width: "400px",
     // width: "30%",
-    width:"800px",
-    height:"600px",
+    width:"700px",
+    height:"700px",
     backgroundColor: "#f5f5f5",
     //border: "1px solid",
     
@@ -481,6 +483,9 @@ color :"black",
     trExp2:{
       color:"#FF4500",
     },
+  trExp4Trial: {
+    color: '#010203',
+  },
     highExp:{
       backgroundColor: "lightblue !important",
       color:"black !important",
@@ -668,10 +673,10 @@ color :"black",
     textAlign: 'center'
   },
   OverlayCircleColumn:{
-    fontSize: '15px',//11
-    // float:'left',
-    // width:'50%',
-    textAlign: 'center',//left
+    fontSize: '11px',
+    float: 'left',
+    width: '50%',
+    textAlign: 'left',
   },
   OverlayCircleData: {
     fontSize: '11px',

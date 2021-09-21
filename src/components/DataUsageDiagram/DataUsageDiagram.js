@@ -16,6 +16,7 @@ import PgmStruChart from "../PgmStruChart/PgmStruChart";
 import Slider from '@material-ui/core/Slider';
 
 var rowId;
+var growid;
 var svg;
 var totNodes;
 //var midIndex;
@@ -23,6 +24,8 @@ var gsrcb = {};
 var pathTransitionFlag = 0;
 var initialScale = 0.25;
 var srcData;
+var srcbLinks;
+
 import CloseIcon from '@material-ui/icons/Close';
 import IconButton from '@material-ui/core/IconButton';
 import { Box, Hidden } from '@material-ui/core';
@@ -66,7 +69,13 @@ const mapDispatchToProps = (dispatch) => {
       };
       
   }
-
+  function collapse(d) {
+    if (d.children) {
+      d._children = d.children;
+      d._children.forEach(collapse);
+      d.children = null;
+    }
+  }
 function handleZoomSlider(val) {
   console.log('handlezoomslider')
   var zoomArr = [0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55];
@@ -112,7 +121,7 @@ const [scddata, setSCDData] = useState({
     text: '',
   });
  DBNAME = props.authDetails.dbName;
- SERVERADDR = 'https://'+props.authDetails.ipAddr+':'+props.authDetails.port;
+ SERVERADDR = 'http://'+props.authDetails.ipAddr+':'+props.authDetails.port;
  
   //const [LoadCode, setLoadCode] = useState('0');
   var SELENTITY = { codedata: [], entity: "" };
@@ -444,6 +453,31 @@ const [scddata, setSCDData] = useState({
     
   },[props.DUDProgramData.DUDProgramData]);  //this will be called every time new row is clicked in table
   
+  useEffect(()=>{
+    console.log('what is srcbpgm',srcbpgm)
+    if(srcbpgm.linenum == "0"){
+    console.log('props change',srcbLinks)
+    if(srcbLinks != undefined && srcbLinks.length > 0){
+    SELENTITY = srcbLinks[0].parent
+    console.log('data',srcbLinks[0].parent.data.DATA[0])
+    console.log('useeffect selentity',SELENTITY)
+    var linkId = `srclink${srcbLinks[0].parent.data.DATA[0].FILENM}`
+    console.log('linkid',linkId)
+    console.log('check selected',d3.select('#srclink'))
+    d3.select('#srclink').remove();
+    var htmlTrSelection = document.getElementById(`${growid}`); //SA_ID
+             
+      console.log('htmlTrSelection',htmlTrSelection)
+      htmlTrSelection.classList.remove(`${classes.highlightwu}`);
+      if (SELENTITY.children) {
+        SELENTITY._children = SELENTITY.children;
+        SELENTITY.children.forEach(collapse);
+        SELENTITY.children = null;
+      }
+    //clickCode(SELENTITY,srcbLinks[0].parent.data.DATA[0])
+    }
+  }
+  },[srcbpgm])
   function drawDFD1() {
     console.log('not called ')
     var rootxPos
@@ -487,7 +521,7 @@ const [scddata, setSCDData] = useState({
      num = root.children.length
      totNodes = num;
 if(num ==6){
-     height = 250   
+     height = 250
      sep = 3.75
 
     }
@@ -554,13 +588,7 @@ if(num ==6){
     update(root);
 
     // Collapse the node and all it's children
-    function collapse(d) {
-      if (d.children) {
-        d._children = d.children;
-        d._children.forEach(collapse);
-        d.children = null;
-      }
-    }
+    
 
     function update(source) {
       // Assigns the x and y position for the nodes
@@ -615,7 +643,7 @@ if(num ==6){
         rootxPos = links[midIndex].x;
         //console.log('rootxPos',rootxPos,rootyPos,links[midIndex])
       } 
-       var srcbLinks;
+       //var srcbLinks;
        srcbLinks = links.filter((obj) => obj.data.ID =='SRCB' );
       console.log('srcbLinks',srcbLinks)
       
@@ -626,12 +654,8 @@ if(num ==6){
           (row) => row.data.ID == 'SRCB' )
         console.log('startIndex',startIndex)  
           links.splice(startIndex,srcbLinks.length-1) 
-
-
       }
-      
-
-      var x3 = nodes[num].x;
+       var x3 = nodes[num].x;
 
       // Normalize for fixed-depth.
       nodes.forEach(function (d) {
@@ -724,7 +748,7 @@ if(num ==6){
           if (d.data.TEXT === d.data.ID && d.data.ID=='Entity') 
           return chldHeight; //just half 150-->75
           else if(d.data.TEXT === d.data.ID && (d.data.ID=='Schema' || d.data.ID=='CODE' || d.data.ID =='Brule'))
-           return 150    //  change height 150
+           return 150
           
            
           else { 
@@ -1077,6 +1101,7 @@ if(num ==6){
               //rowSelected.style.backgroundColor = "yellow";
               //console.log('check row', document.getElementById('trowcodeNXTINV#PINVUSER0'))
               var htmlTrSelection = document.getElementById(`trowcode${e.FILENM}${i}`); //SA_ID
+              growid = `trowcode${e.FILENM}${i}`
              // console.log('htmlTrSelection',htmlTrSelection)
               htmlTrSelection.classList.add(`${classes.highlightwu}`);
 
@@ -1084,6 +1109,12 @@ if(num ==6){
             else{
               
               rows[0].classList.remove(`${classes.highlightwu}`)
+              /*SA_FIX RIGHT */
+              var htmlTrSelection = document.getElementById(`trowcode${e.FILENM}${i}`); //SA_ID
+              growid = `trowcode${e.FILENM}${i}`
+             // console.log('htmlTrSelection',htmlTrSelection)
+              htmlTrSelection.classList.add(`${classes.highlightwu}`);
+
             }
             setTimeout(function() {
               //your code to be executed after 1 second
@@ -1223,15 +1254,35 @@ if(num ==6){
             else
               return null
           }
+          //remove extra spaces from d in case of pgmcode
+          if ( i == 3){
+              console.log('d ki val',d.trim())
+              d =  d.trim()
+              console.log('new val',d)
+             
+
+              if (
+                (d[0].toUpperCase() == 'C' && d[1] == ' ') ||
+                (d[0].toUpperCase() == 'D' && d[1] == ' ') ||
+                (d[0].toUpperCase() == 'F' && d[1] == ' ') ||
+                (d[0].toUpperCase() == 'P' && d[1] == ' ')
+              ) {
+                console.log('came here')
+                d = d.substring(1);
+              }
+          }
+
+
           return d;  
         })
        
       
       function foCodeClick(node,i) {
       
-      // console.log('in focodeclick selentity',SELENTITY)
+       console.log('in focodeclick selentity',SELENTITY)
+       console.log('in focodeclick node',node)
     
-      clickCode(SELENTITY,node,i)
+      clickCode(SELENTITY,node)
      //var offsetTop = Math.abs($(`#trow${i}${node.ID}`).offset().top - 190 );
      
       }
@@ -1477,6 +1528,7 @@ if(num ==6){
         .insert("path", "g")
         
         .style('stroke', (d) => {
+          console.log('whatis d',d)
           if (d.data.ID == 'Entity') {
             return 'white';
           } else return 'black';
@@ -1486,6 +1538,15 @@ if(num ==6){
         .style("vector-effect", "non-scaling-stroke")
         
         .attr("class", "link")
+        .attr('id',function(d){
+          if(d.data.ID == 'SRCB'){
+            
+            //return `srclink${d.parent.data.DATA[0].FILENM}`
+            return 'srclink'
+          }
+          else 
+           return ''
+        })
         .attr("d", function (d) {
           var o = { x: source.x0, y: source.y0 };
 
@@ -1635,29 +1696,30 @@ if(num ==6){
         }
         update(d);
       }
-      function clickCode(d,node,i) {
+      function clickCode(d,node) {
         //console.log('checkthis',document.getElementById('tblschOEBCTLP'))
         //console.log('clickcode show node',node)
         //console.log('clickcode show d',d)
        var exp = 0;
        var offset;
+       var item;
        //var topPos;
        //var leftPos;
         if (d.children) {
-          d._children = d.children;
+          /*d._children = d.children;
           d.children.forEach(collapse);
           d.children = null;
-          exp = 0;
+          exp = 0;*/
         } else {
           d.children = d._children;
           d._children = null;
           exp = 1;
         }
-        update(d);
+        //update(d);
         if(exp == 1){
          if(gsrcb.linenum!=''){
             console.log('shi_case hit',gsrcb)
-            setLoad({linenum:"", value:"", text:"", shortnm:""})
+           setLoad({linenum:"", value:"", text:"", shortnm:""})
           }  
          var id = `tblcode${node.FILENM}` //SA_ID
          var temp = ''
@@ -1683,7 +1745,7 @@ if(num ==6){
        
       console.log('nowshow',props)
         
-          var item =  
+           item =  
        {
             linenum: node.ID,
             text: "",
@@ -1700,9 +1762,32 @@ if(num ==6){
           gsrcb['shortnm'] = node.SVAR1 
           gsrcb['offset'] = 850
           gsrcb['ENTID'] = d.parent.data.HEADID
-     setLoad(item)
+          setLoad(item)
+          update(d);
         }
         else{
+          offset = $('[id="'+`tblcode${node.FILENM}`+'"]').offset() ; //SA_ID
+          item =  
+          {
+               linenum: node.ID,
+               text: "",
+              // value: props.DUDProgramData.DUDProgramData.ID, //node.ENTID,
+               value: node.PGMID,
+               shortnm:node.SVAR1,
+               offsetTop: Math.abs(offset.top)-110,   //-175
+               offsetLeft: offset.left+350+25
+           };
+             console.log("whats in item====", item)
+             gsrcb['linenum'] = node.ID
+             gsrcb['text'] = ''
+             gsrcb['value'] = node.ENTID
+             gsrcb['shortnm'] = node.SVAR1 
+             gsrcb['offset'] = 850
+             gsrcb['ENTID'] = d.parent.data.HEADID
+             setLoad(item)
+
+        }
+        /*else{
           setLoad({linenum:"", value:"", text:"", shortnm:""})
           //gsrcb = {linenum:"", value:"", text:"", shortnm:""}
           gsrcb['linenum'] = ""
@@ -1711,7 +1796,8 @@ if(num ==6){
           gsrcb['shortnm'] = "" 
           gsrcb['PGMID'] = ""
           //gsrcb['offset'] = 850
-        }
+        }*/
+       // update(d);
       }
       if (pathTransitionFlag == 1) {
         var zz = d3.selectAll('path.link');
@@ -1758,7 +1844,7 @@ if(num ==6){
           .attr('stroke-dashoffset', 0);
                   }
           }, 1000);
-        }, 0);
+        }, 1000);
       } else {
         var zz = svg.selectAll('path.link').attr('stroke-dasharray', 0);
     }
@@ -1828,7 +1914,7 @@ if(num ==6){
          </div>
 
       {/*{scddata.value == 'default'?(<CodeEditor srcbpgm={srcbpgm} {...props}/>):null} */}
-      {srcbpgm.linenum !=""?(<CodeEditor srcbpgm={srcbpgm}{...props} />):null}
+      {srcbpgm.shortnm !=""?(<CodeEditor srcbpgm={srcbpgm} setLoad={setLoad}{...props} />):null}
       {scddata.value != 'default' ? (
         
         <PgmStruChart scddata={scddata} {...props} />

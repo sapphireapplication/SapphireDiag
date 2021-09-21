@@ -1,0 +1,2 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[14],{245:function(a){a.exports=JSON.parse('{"name":"RC00241","navigation":"Parameters of  ","caption":"Parameters","contextmenu":false,"frame":[{"id":"0002","type":"pgmcallingparam-detail"}],"columns":[{"id":"PGMFLD","label":"Program Field","minWidth":250,"align":"left"},{"id":"DBFLD","label":"DataBase Field","minWidth":250}]}')}}]);
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiIxNC5idW5kbGUuanMiLCJzb3VyY2VSb290IjoiIn0=

@@ -15,7 +15,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname ,"dist"),
     filename: "[name].bundle.js",
-    publicPath: '/SapphireNew/',                      //'/SapphireNew/',   //SA_CH /SapphireNew
+    publicPath: '/SapphireDiag/',                      //'/SapphireNew/',   //SA_CH /SapphireNew
   },
   module: {
     rules: [
@@ -40,7 +40,7 @@ module.exports = {
     historyApiFallback: true,
     
       //openPage: ['http://localhost:8080/SapphireNew'],
-      openPage:  'SapphireNew/',       //'SapphireNew/',
+      openPage:  'SapphireDiag/',       //'SapphireNew/',
       hot:true
    
        

@@ -56,7 +56,7 @@ function Topbar(props) {
   const removeall = () =>{
     localStorage.clear();
     console.log('show window origin',`${window.location.origin}`)
-    window.location.assign(`${window.location.origin}/SapphireNew/`);
+    window.location.assign(`${window.location.origin}/SapphireDiag/`);
   };
   const [open, setOpen] = React.useState(false);
   const [dialogTitle, setDialogTitle] = React.useState('');
@@ -181,7 +181,7 @@ function Topbar(props) {
               
             
             >
-           <Link style={{color :"white", textDecoration:"none"}} to={{pathname:`/SapphireNew/${props.authDetails.dbName}/dusgp`}}>PROGRAMS</Link> 
+           <Link style={{color :"white", textDecoration:"none"}} to={{pathname:`/SapphireDiag/${props.authDetails.dbName}/dusgp`}}>PROGRAMS</Link> 
         </Button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
        
             <Button 
@@ -192,7 +192,7 @@ function Topbar(props) {
               onClick={handleFileClick}
               
             >
-              <Link style={{color :"white", textDecoration:"none"}} to={{pathname:`/SapphireNew/${props.authDetails.dbName}/dusgf`}}>FILES</Link>
+              <Link style={{color :"white", textDecoration:"none"}} to={{pathname:`/SapphireDiag/${props.authDetails.dbName}/dusgf`}}>FILES</Link>
              
             {/*<Link style={{color :"white", textDecoration:"none"}} to="/`:${props.authDetails.dbName}`/dusgf">FILES</Link>*/}
             

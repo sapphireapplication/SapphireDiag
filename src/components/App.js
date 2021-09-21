@@ -16,7 +16,7 @@ function App(props) {
 
   //Temporary setting of cookie
   var tokenVal = btoa("mdadmin" + ":" + "mdadmin");
-  cookies.set("Token", tokenVal, { path: "/SapphireNew" });
+  cookies.set("Token", tokenVal, { path: "/SapphireDiag" });
 
   /* To remove cookie */
   // cookies.remove('Token');

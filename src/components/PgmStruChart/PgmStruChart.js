@@ -107,7 +107,7 @@ function PgmStruChart(props) {
   const [datausgfile, setDataUsg] = useState({ value: 'default', text: '' });
   DBNAME = props.authDetails.dbName;
   SERVERADDR =
-    'http://' + props.authDetails.ipAddr + ':' + props.authDetails.port;
+    'https://' + props.authDetails.ipAddr + ':' + props.authDetails.port;
   useEffect(() => {
     console.log('shilpi calling setProgramData');
     props.setProgramData();

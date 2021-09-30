@@ -36,7 +36,7 @@ function DMDChart(props) {
     const { classes } = props;
     console.log('props in DMD',props)
     DBNAME = props.authDetails.dbName;
-    SERVERADDR = 'http://' + props.authDetails.ipAddr + ':' + props.authDetails.port;
+    SERVERADDR = 'https://' + props.authDetails.ipAddr + ':' + props.authDetails.port;
     useEffect(() => {
         // console.log(' calling setEntityData');
         props.setEntityData();
